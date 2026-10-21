@@ -1,6 +1,0 @@
-
-> portfolio@0.0.1 preview
-> astro preview
-
-Port 4321 is in use, trying another one...
-{"message":" astro  v7.4.1 ready in 95 ms\n┃ Local    http://localhost:4322/\n┃ Network  use --host to expose","label":"SKIP_FORMAT","level":"info"}

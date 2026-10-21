@@ -166,8 +166,8 @@ const projects = [
             ><i></i> Available for hard problems · Tehran, Iran</span
           >
           <h1 class="hero__title">
-            <span data-scramble>Amir Mohammad</span>
-            <span class="outline"><b data-scramble data-glitch="Kahfi">Kahfi</b><b class="star">✳</b></span>
+            <span>Amir Mohammad</span>
+            <span class="outline"><b data-glitch="Kahfi">Kahfi</b><b class="star">✳</b></span>
           </h1>
           <p class="hero__lead">
             Back-end-focused software engineer building server-side systems in{" "}
@@ -517,40 +517,6 @@ const projects = [
   <script>
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/\\<>{}[]#*+=$%";
-
-    const scramble = (root, duration = 900) => {
-      const nodes = [];
-      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-      while (walker.nextNode()) {
-        const node = walker.currentNode;
-        if (node.textContent.trim()) nodes.push({ node, final: node.textContent });
-      }
-      if (!nodes.length) return;
-      const start = performance.now();
-      const step = (now) => {
-        const p = Math.min((now - start) / duration, 1);
-        for (const { node, final } of nodes) {
-          const revealed = Math.floor(p * final.length);
-          let out = "";
-          for (let i = 0; i < final.length; i++) {
-            const ch = final[i];
-            out += i < revealed || ch === " " ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0];
-          }
-          node.textContent = out;
-        }
-        if (p < 1) requestAnimationFrame(step);
-        else for (const { node, final } of nodes) node.textContent = final;
-      };
-      requestAnimationFrame(step);
-    };
-
-    if (!reduceMotion) {
-      document.querySelectorAll("[data-scramble]").forEach((el, i) => {
-        window.setTimeout(() => scramble(el, 950), 180 + i * 150);
-      });
-    }
-
     const bar = document.getElementById("progress");
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -580,17 +546,6 @@ const projects = [
         for (const entry of entries) {
           if (entry.isIntersecting) {
             entry.target.classList.add("in");
-            if (!reduceMotion) {
-              const title = entry.target.matches(".sec__head")
-                ? entry.target.querySelector(".sec__title")
-                : entry.target.matches(".contact__title")
-                  ? entry.target
-                  : null;
-              if (title && !title.dataset.decoded) {
-                title.dataset.decoded = "1";
-                scramble(title, 900);
-              }
-            }
             io.unobserve(entry.target);
           }
         }
@@ -639,7 +594,6 @@ const projects = [
       const dot = document.querySelector(".cursor-hud__dot");
       const coords = document.querySelector(".cursor-hud__coords");
       if (ring && dot && coords) {
-        document.documentElement.classList.add("has-cursor");
         ring.style.opacity = "0";
         dot.style.opacity = "0";
         coords.style.opacity = "0";
@@ -647,9 +601,16 @@ const projects = [
         let my = window.innerHeight / 2;
         let sx = mx;
         let sy = my;
+        let firstMove = true;
         window.addEventListener("pointermove", (e) => {
+          document.documentElement.classList.add("has-cursor");
           mx = e.clientX;
           my = e.clientY;
+          if (firstMove) {
+            firstMove = false;
+            sx = mx;
+            sy = my;
+          }
           ring.style.opacity = "1";
           dot.style.opacity = "1";
           coords.style.opacity = "0.7";
