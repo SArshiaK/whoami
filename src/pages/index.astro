@@ -123,13 +123,24 @@ const projects = [
         <span class="brand__dot"></span>
         AMK<span class="mono" style="color:var(--dim)">/ eng</span>
       </a>
-      <nav class="nav__links" aria-label="Sections">
-        <a href="#about">About</a>
-        <a href="#stack">Stack</a>
-        <a href="#experience">Experience</a>
-        <a href="#work">Work</a>
-        <a class="nav__cta" href="#contact">Contact</a>
-      </nav>
+      <div class="nav__end">
+        <nav class="nav__links" aria-label="Sections">
+          <a href="#about">About</a>
+          <a href="#stack">Stack</a>
+          <a href="#experience">Experience</a>
+          <a href="#work">Work</a>
+          <a class="nav__cta" href="#contact">Contact</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
+          <svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path>
+          </svg>
+          <svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"></circle>
+            <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -441,6 +452,22 @@ const projects = [
           </article>
         </div>
 
+        <a
+          class="edu__card edu__lab reveal"
+          href="https://webpages.iust.ac.ir/msharifi/dslab.html#members"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <div>
+            <span class="edu__time">Lab · IUST</span>
+            <h3 class="edu__degree">Distributed Systems Lab</h3>
+            <p class="edu__school">
+              Part of the Distributed Systems Lab team — around federated learning and
+              self-healing distributed systems.
+            </p>
+          </div>
+          <span class="edu__lab__go">View lab members ↗</span>
+        </a>
         <div class="stack reveal" style="margin-top:1.1rem">
           <div class="stack__row">
             <span class="stack__label">Languages</span>
@@ -492,6 +519,22 @@ const projects = [
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
 
+    const themeBtn = document.getElementById("themeToggle");
+    const rootEl = document.documentElement;
+    const syncTheme = () => {
+      const light = rootEl.dataset.theme === "light";
+      themeBtn?.setAttribute("aria-pressed", String(light));
+      themeBtn?.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", light ? "#f3f2ec" : "#07080a");
+    };
+    themeBtn?.addEventListener("click", () => {
+      rootEl.dataset.theme = rootEl.dataset.theme === "light" ? "dark" : "light";
+      localStorage.setItem("theme", rootEl.dataset.theme);
+      syncTheme();
+    });
+    syncTheme();
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {

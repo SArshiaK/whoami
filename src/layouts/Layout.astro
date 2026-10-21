@@ -23,6 +23,15 @@ const { title, description } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <script is:inline>
+      (() => {
+        const fromUrl = new URLSearchParams(location.search).get("theme");
+        const saved = fromUrl || localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (fromUrl === "light" || fromUrl === "dark") localStorage.setItem("theme", fromUrl);
+        document.documentElement.dataset.theme = saved || (prefersLight ? "light" : "dark");
+      })();
+    </script>
   </head>
   <body>
     <slot />
