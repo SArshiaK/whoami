@@ -1,0 +1,597 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const stack = [
+  { k: "Full-stack", v: ["Nest.js", "Express.js", "Next.js", "React.js"] },
+  { k: "ORM / ODM", v: ["Sequelize", "TypeORM", "Mongoose", "Prisma"] },
+  { k: "Databases", v: ["PostgreSQL", "MongoDB", "MySQL", "Redis"] },
+  { k: "APIs", v: ["REST", "gRPC", "Swagger", "Postman", "SMS.ir", "PayPing", "IdPay", "Zibal"] },
+  { k: "Real-time", v: ["Socket.IO", "gRPC services"] },
+  { k: "AI & LLM", v: ["OpenAI-compatible APIs", "Ollama", "Embeddings", "RAG", "Qdrant", "ChromaDB", "Prompt engineering", "JSON mode"] },
+  { k: "DevOps", v: ["Docker", "Kubernetes (basic)", "GitHub Actions", "GitLab CI"] },
+  { k: "Tooling", v: ["Cursor", "Claude Code"] },
+];
+
+const jobs = [
+  {
+    time: "Dec 2025 — Aug 2026",
+    type: "Part-time",
+    role: "Software Engineer",
+    org: "Faraz Co · Iran Zamin Bank Technology Development",
+    desc: "Back-end engineering with a focus on LLM features in production — retrieval pipelines, embedding services and support tooling built for real users.",
+  },
+  {
+    time: "Jun 2023 — Present",
+    type: "Full-time",
+    role: "Back-end Developer",
+    org: "DPA · Dade Pardazi Azmoodeh Karan",
+    desc: "Server-side services, data pipelines and internal tools for legal, audit and financial workflows — from web crawlers and RAG assistants to Excel-driven automation.",
+  },
+  {
+    time: "Apr — Jun 2023",
+    type: "Full-time",
+    role: "Back-end Developer Intern",
+    org: "IZICenter · Iran Zamin Bank Innovation Center",
+    desc: "Started at the bank's innovation center: back-end features, internal panels, and the first release of a published Android app.",
+  },
+];
+
+const projects = [
+  {
+    n: "01",
+    tag: "RAG / LLM",
+    title: "Troubleshooting Support Chatbot",
+    org: "Faraz Co · pre-production testing",
+    when: "2026",
+    featured: true,
+    summary:
+      "A chatbot that tells users how to fix problems, grounded in about 1,000 existing troubleshooting records.",
+    points: [
+      "Built the embedding pipeline with Sentence Transformers and stored vectors in ChromaDB.",
+      "Every message triggers a vector search; the matches go into a prompt the LLM answers from, with local and API models plus chat history.",
+      "Added BM25 keyword search in parallel with semantic search to raise retrieval accuracy.",
+      "Used micro-batching to keep embedding fast under many simultaneous requests.",
+      "Added an LLM step that detects which data categories a question belongs to before retrieval.",
+    ],
+    stack: ["Sentence Transformers", "ChromaDB", "BM25", "Local & API LLMs", "Micro-batching"],
+  },
+  {
+    n: "02",
+    tag: "RAG / LEGAL",
+    title: "Legal-Domain RAG Assistant",
+    org: "DPA · full data pipeline from scratch",
+    when: "2025",
+    summary:
+      "A chatbot that explains legal and regulatory questions — crawling, chunking and retrieval all built in-house.",
+    points: [
+      "Crawled legal websites, used an LLM to chunk the text, and had it generate categories and summaries for each chunk, stored in Qdrant.",
+      "Retrieval routes the question to a category first, then runs vector search and parallel BM25 keyword search.",
+      "Answers cite exact legal articles, and the interface shows which parts are verbatim law and which are model analysis.",
+      "Reduced hallucination with prompt constraints (analyze, never invent law) and a lower temperature.",
+    ],
+    stack: ["Qdrant", "Web crawling", "LLM chunking", "BM25", "Prompt engineering"],
+  },
+  {
+    n: "03",
+    tag: "AUTOMATION",
+    title: "Audit & Fund Compliance Automation",
+    org: "DPA · ongoing",
+    when: "2024 — NOW",
+    summary:
+      "Internal tools that replaced manual accounting and audit work with queued, verifiable pipelines.",
+    points: [
+      "Bond yield (YTM/YTC): users upload an Excel file instead of entering each record by hand; the system fetches the result for every record and runs large files through a background queue.",
+      "Fund threshold checks: regulatory limits are verified automatically from the uploaded fund assets.",
+      "Audit automation (in progress): uploading a company's detailed accounting documents runs all calculations and checklists automatically.",
+    ],
+    stack: ["Node.js", "Background job queues", "Excel processing"],
+  },
+  {
+    n: "04",
+    tag: "INTERNAL TOOLS",
+    title: "Admin Panels & Reporting",
+    org: "IZICenter · Faraz Co",
+    when: "2023 — NOW",
+    summary:
+      "Internal admin panels with data display and reporting features, used by operations teams behind the scenes.",
+    points: [],
+    stack: ["Admin panels", "Reporting", "Internal tools"],
+  },
+  {
+    n: "05",
+    tag: "SHIPPED / ANDROID",
+    title: "Pomodoro Study Planner",
+    org: "Personal project · Cafe Bazaar",
+    when: "12K+ INSTALLS",
+    summary:
+      "Designed, built and published a Pomodoro study app with a focus timer, study statistics, per-subject progress tracking and light/dark themes.",
+    points: [],
+    stack: ["React Native", "Cafe Bazaar"],
+  },
+];
+---
+
+<Layout
+  title="Amir Mohammad Kahfi — Software Engineer"
+  description="Back-end-focused software engineer building Node.js systems and the retrieval layers that make LLMs useful. Nest.js, PostgreSQL, Redis, Docker, RAG and vector search."
+>
+  <div class="progress" id="progress"></div>
+
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="#top" aria-label="Back to top">
+        <span class="brand__dot"></span>
+        AMK<span class="mono" style="color:var(--dim)">/ eng</span>
+      </a>
+      <nav class="nav__links" aria-label="Sections">
+        <a href="#about">About</a>
+        <a href="#stack">Stack</a>
+        <a href="#experience">Experience</a>
+        <a href="#work">Work</a>
+        <a class="nav__cta" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="rail" aria-hidden="true">
+    <a href="https://github.com/SArshiaK" target="_blank" rel="noreferrer">GitHub</a>
+    <a href="https://linkedin.com/in/sarshiak" target="_blank" rel="noreferrer">LinkedIn</a>
+    <span class="rail__line"></span>
+    <span>Tehran / IR</span>
+  </div>
+
+  <main id="top">
+    <section class="hero">
+      <canvas id="net" aria-hidden="true"></canvas>
+      <div class="wrap hero__inner">
+        <div>
+          <span class="eyebrow"
+            ><i></i> Available for hard problems · Tehran, Iran</span
+          >
+          <h1 class="hero__title">
+            <span>Amir Mohammad</span>
+            <span class="outline"><b>Kahfi</b><b class="star">✳</b></span>
+          </h1>
+          <p class="hero__lead">
+            Back-end-focused software engineer building server-side systems in{" "}
+            <strong>Node.js</strong> — and the retrieval layers that make LLMs
+            actually useful. Clean design, maintainable code, production
+            behaviour.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--solid" href="#work"
+              >Selected work <span class="btn__arrow">↗</span></a
+            >
+            <a class="btn" href="#contact">Get in touch</a>
+            <a
+              class="btn"
+              href="https://github.com/SArshiaK"
+              target="_blank"
+              rel="noreferrer">GitHub <span class="btn__arrow">↗</span></a
+            >
+          </div>
+        </div>
+
+        <div class="term" aria-hidden="true">
+          <div class="term__bar">
+            <i></i><i></i><i></i>
+            <span>~/amk — zsh</span>
+          </div>
+          <div class="term__body">
+            <p><span class="c">$</span> <span class="p">whoami</span></p>
+            <p>
+              <span class="v">amir_mohammad_kahfi</span>{" "}
+              <span class="c">// software engineer</span>
+            </p>
+            <p><span class="c">$</span> <span class="p">cat</span> focus.txt</p>
+            <p>
+              <span class="s">"back-end systems · retrieval-augmented LLMs"</span>
+            </p>
+            <p><span class="c">$</span> <span class="p">ls</span> ~/stack</p>
+            <p>
+              <span class="k">nest</span> <span class="k">next</span>
+              <span class="k">postgres</span> <span class="k">redis</span>
+              <span class="k">docker</span> <span class="k">qdrant</span>
+              <span class="k">ollama</span>
+            </p>
+            <p>
+              <span class="c">$</span> <span class="p">status</span>{" "}--available<span class="cursor"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap hero__stats">
+        <div class="stat">
+          <b>3<em>+</em></b>
+          <span>Years shipping software</span>
+        </div>
+        <div class="stat">
+          <b>12K<em>+</em></b>
+          <span>Android app installs</span>
+        </div>
+        <div class="stat">
+          <b>1K<em>+</em></b>
+          <span>Records in a RAG index</span>
+        </div>
+        <div class="stat">
+          <b>M.Sc<em>.</em></b>
+          <span>IUST · 2025 — present</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        {
+          [0, 1].map(() => (
+            <div class="marquee__group">
+              {[
+                "Node.js",
+                "Nest.js",
+                "Next.js",
+                "PostgreSQL",
+                "Redis",
+                "Docker",
+                "Socket.IO",
+                "gRPC",
+                "ChromaDB",
+                "Qdrant",
+                "Ollama",
+                "RAG",
+                "Prompt Engineering",
+              ].map((t) => (
+                <>
+                  <span>{t}</span>
+                  <i>✳</i>
+                </>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <section class="sec" id="about">
+      <div class="wrap">
+        <div class="sec__head reveal">
+          <div>
+            <span class="sec__idx">01 — About</span>
+            <h2 class="sec__title">
+              Back-end first,<br /><em>retrieval obsessed.</em>
+            </h2>
+          </div>
+          <p class="sec__note">Design · build · ship · keep it readable</p>
+        </div>
+
+        <div class="about__grid">
+          <div class="about__copy reveal">
+            <p>
+              I'm a software engineer who lives on the server side. Most of my
+              work is Node.js: APIs, databases, background queues and
+              integrations — software designed to be understood six months
+              later, by someone who isn't me.
+            </p>
+            <p>
+              Lately I've been building the layer between LLMs and reality:
+              embedding pipelines, vector search, hybrid BM25 ranking, and
+              prompts constrained enough that answers stay grounded. I work
+              closely with front-end and cross-functional teams, and I like
+              owning a feature from schema to shipped behaviour.
+            </p>
+            <p>
+              Currently at Faraz Co, studying for an M.Sc. at Iran University of
+              Science and Technology.
+            </p>
+          </div>
+
+          <div class="jsoncard reveal">
+            <div class="jsoncard__head">
+              <span>engineer.json</span><span>UTF-8</span>
+            </div>
+            <pre><span class="punc">&#123;</span>
+  <span class="key">"name"</span><span class="punc">:</span> <span class="str">"Amir Mohammad Kahfi"</span><span class="punc">,</span>
+  <span class="key">"role"</span><span class="punc">:</span> <span class="str">"software_engineer"</span><span class="punc">,</span>
+  <span class="key">"based_in"</span><span class="punc">:</span> <span class="str">"Tehran, IR"</span><span class="punc">,</span>
+  <span class="key">"focus"</span><span class="punc">:</span> <span class="str">"back-end · retrieval · LLM"</span><span class="punc">,</span>
+  <span class="key">"stack"</span><span class="punc">:</span> <span class="punc">[</span><span class="str">"node"</span><span class="punc">,</span> <span class="str">"nest"</span><span class="punc">,</span> <span class="str">"postgres"</span><span class="punc">]</span><span class="punc">,</span>
+  <span class="key">"shipping_since"</span><span class="punc">:</span> <span class="num">2023</span><span class="punc">,</span>
+  <span class="key">"currently"</span><span class="punc">:</span> <span class="str">"M.Sc. @ IUST"</span><span class="punc">,</span>
+  <span class="key">"open_to"</span><span class="punc">:</span> <span class="str">"hard problems"</span><span class="punc">,</span>
+  <span class="key">"available"</span><span class="punc">:</span> <span class="bool">true</span>
+<span class="punc">&#125;</span></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="stack">
+      <div class="wrap">
+        <div class="sec__head reveal">
+          <div>
+            <span class="sec__idx">02 — Stack</span>
+            <h2 class="sec__title">The tools I reach for.</h2>
+          </div>
+          <p class="sec__note">
+            Chosen for boring reliability,<br />not for the README.
+          </p>
+        </div>
+
+        <div class="stack reveal">
+          {
+            stack.map((row) => (
+              <div class="stack__row">
+                <span class="stack__label">{row.k}</span>
+                <div class="stack__chips">
+                  {row.v.map((item) => (
+                    <span class="chip">{item}</span>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="experience">
+      <div class="wrap">
+        <div class="sec__head reveal">
+          <div>
+            <span class="sec__idx">03 — Experience</span>
+            <h2 class="sec__title">Where I've been building.</h2>
+          </div>
+          <p class="sec__note">Three years · two banks · one obsession</p>
+        </div>
+
+        <div class="jobs">
+          {
+            jobs.map((job) => (
+              <article class="job reveal">
+                <div class="job__time">
+                  {job.time}
+                  <small>{job.type}</small>
+                </div>
+                <div>
+                  <h3 class="job__role">{job.role}</h3>
+                  <div class="job__org">{job.org}</div>
+                  <p class="job__desc">{job.desc}</p>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="work">
+      <div class="wrap">
+        <div class="sec__head reveal">
+          <div>
+            <span class="sec__idx">04 — Selected work</span>
+            <h2 class="sec__title">Things that do the work.</h2>
+          </div>
+          <p class="sec__note">
+            Company projects described<br />without confidential details.
+          </p>
+        </div>
+
+        <div class="work">
+          {
+            projects.map((p) => (
+              <article class:list={["project", "reveal", { "project--featured": p.featured }]}>
+                <div class="project__top">
+                  <span class="project__num">{p.n}</span>
+                  <span class:list={["project__tag", { "project__tag--alt": p.featured }]}>{p.tag}</span>
+                  <span class="project__when">{p.when}</span>
+                </div>
+                <h3 class="project__title">{p.title}</h3>
+                <div class="project__org">{p.org}</div>
+                <div class:list={["project__body", { "project__body--single": p.points.length === 0 }]}>
+                  <p class="project__summary">{p.summary}</p>
+                  {p.points.length > 0 && (
+                    <ul class="project__list">
+                      {p.points.map((pt) => (
+                        <li>{pt}</li>
+                      ))}
+                    </ul>
+                  )}
+                  <div class="project__stack">
+                    {p.stack.map((s) => (
+                      <span>{s}</span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="education">
+      <div class="wrap">
+        <div class="sec__head reveal">
+          <div>
+            <span class="sec__idx">05 — Education</span>
+            <h2 class="sec__title">Still taking notes.</h2>
+          </div>
+          <p class="sec__note">Self-healing systems · federated learning</p>
+        </div>
+
+        <div class="edu__grid">
+          <article class="edu__card reveal">
+            <span class="edu__time">2025 — Present</span>
+            <h3 class="edu__degree">M.Sc., Computer Software Engineering</h3>
+            <p class="edu__school">Iran University of Science and Technology</p>
+            <div class="edu__meta">
+              <div><span>Seminar</span><b>Self-healing in federated learning</b></div>
+              <div><span>Thesis</span><b>To be determined</b></div>
+            </div>
+          </article>
+
+          <article class="edu__card reveal">
+            <span class="edu__time">2020 — 2025</span>
+            <h3 class="edu__degree">B.Sc., Computer Engineering</h3>
+            <p class="edu__school">Shahed University</p>
+            <div class="edu__meta">
+              <div><span>Final project</span><b>University job-board platform</b></div>
+              <div><span>Presented to</span><b>Faculty panel</b></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="stack reveal" style="margin-top:1.1rem">
+          <div class="stack__row">
+            <span class="stack__label">Languages</span>
+            <div class="stack__chips">
+              <span class="chip">Persian — Native</span>
+              <span class="chip">English — Intermediate</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap contact__inner">
+        <span class="contact__kicker reveal">✳ Open to interesting problems</span>
+        <h2 class="contact__title reveal">
+          Let's build something that <em>thinks.</em>
+        </h2>
+        <a class="contact__mail reveal" href="mailto:arshia9314@gmail.com">
+          arshia9314@gmail.com
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </a>
+
+        <div class="contact__links reveal">
+          <a href="https://github.com/SArshiaK" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <a href="https://linkedin.com/in/sarshiak" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          <a href="tel:09039618464">0903 961 8464</a>
+        </div>
+
+        <footer class="foot">
+          <span>© 2026 Amir Mohammad Kahfi</span>
+          <span>Built with Astro · Tehran</span>
+          <a href="#top">Back to top ↑</a>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const bar = document.getElementById("progress");
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + "%";
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in");
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+    );
+    document.querySelectorAll(".reveal").forEach((el, i) => {
+      el.style.transitionDelay = Math.min(i % 4, 3) * 70 + "ms";
+      io.observe(el);
+    });
+
+    document.querySelectorAll(".project").forEach((card) => {
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty("--mx", e.clientX - r.left + "px");
+        card.style.setProperty("--my", e.clientY - r.top + "px");
+      });
+    });
+
+    const canvas = document.getElementById("net");
+    if (canvas && !reduceMotion) {
+      const ctx = canvas.getContext("2d");
+      let w = 0;
+      let h = 0;
+      let nodes = [];
+      const linkDist = 150;
+
+      const resize = () => {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const rect = canvas.getBoundingClientRect();
+        w = rect.width;
+        h = rect.height;
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const count = Math.max(18, Math.min(52, Math.round((w * h) / 24000)));
+        nodes = Array.from({ length: count }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.32,
+          vy: (Math.random() - 0.5) * 0.32,
+          r: Math.random() * 1.4 + 0.8,
+          hot: Math.random() > 0.82,
+        }));
+      };
+
+      let raf = 0;
+      const draw = () => {
+        ctx.clearRect(0, 0, w, h);
+        for (const n of nodes) {
+          n.x += n.vx;
+          n.y += n.vy;
+          if (n.x < 0 || n.x > w) n.vx *= -1;
+          if (n.y < 0 || n.y > h) n.vy *= -1;
+        }
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const a = nodes[i];
+            const b = nodes[j];
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+            const d = Math.hypot(dx, dy);
+            if (d < linkDist) {
+              const alpha = (1 - d / linkDist) * 0.17;
+              ctx.strokeStyle = `rgba(201,255,77,${alpha})`;
+              ctx.lineWidth = 0.8;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+        }
+        for (const n of nodes) {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fillStyle = n.hot ? "rgba(201,255,77,0.9)" : "rgba(190,200,180,0.5)";
+          ctx.fill();
+          if (n.hot) {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r + 4, 0, Math.PI * 2);
+            ctx.strokeStyle = "rgba(201,255,77,0.18)";
+            ctx.stroke();
+          }
+        }
+        raf = requestAnimationFrame(draw);
+      };
+
+      resize();
+      draw();
+      let rt = 0;
+      window.addEventListener("resize", () => {
+        clearTimeout(rt);
+        rt = setTimeout(resize, 150);
+      });
+    }
+  </script>
+</Layout>
