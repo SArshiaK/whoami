@@ -117,6 +117,12 @@ const projects = [
 >
   <div class="progress" id="progress"></div>
 
+  <div class="cursor-hud" aria-hidden="true">
+    <div class="cursor-hud__ring"></div>
+    <div class="cursor-hud__dot"></div>
+    <div class="cursor-hud__coords">0000 · 0000</div>
+  </div>
+
   <header class="nav">
     <div class="wrap nav__inner">
       <a class="brand" href="#top" aria-label="Back to top">
@@ -160,8 +166,8 @@ const projects = [
             ><i></i> Available for hard problems · Tehran, Iran</span
           >
           <h1 class="hero__title">
-            <span>Amir Mohammad</span>
-            <span class="outline"><b>Kahfi</b><b class="star">✳</b></span>
+            <span data-scramble>Amir Mohammad</span>
+            <span class="outline"><b data-scramble data-glitch="Kahfi">Kahfi</b><b class="star">✳</b></span>
           </h1>
           <p class="hero__lead">
             Back-end-focused software engineer building server-side systems in{" "}
@@ -214,15 +220,15 @@ const projects = [
 
       <div class="wrap hero__stats">
         <div class="stat">
-          <b>3<em>+</em></b>
+          <b><span data-count="3">3</span><em>+</em></b>
           <span>Years shipping software</span>
         </div>
         <div class="stat">
-          <b>12K<em>+</em></b>
+          <b><span data-count="12">12</span>K<em>+</em></b>
           <span>Android app installs</span>
         </div>
         <div class="stat">
-          <b>1K<em>+</em></b>
+          <b><span data-count="1">1</span>K<em>+</em></b>
           <span>Records in a RAG index</span>
         </div>
         <div class="stat">
@@ -511,6 +517,40 @@ const projects = [
   <script>
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/\\<>{}[]#*+=$%";
+
+    const scramble = (root, duration = 900) => {
+      const nodes = [];
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (node.textContent.trim()) nodes.push({ node, final: node.textContent });
+      }
+      if (!nodes.length) return;
+      const start = performance.now();
+      const step = (now) => {
+        const p = Math.min((now - start) / duration, 1);
+        for (const { node, final } of nodes) {
+          const revealed = Math.floor(p * final.length);
+          let out = "";
+          for (let i = 0; i < final.length; i++) {
+            const ch = final[i];
+            out += i < revealed || ch === " " ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0];
+          }
+          node.textContent = out;
+        }
+        if (p < 1) requestAnimationFrame(step);
+        else for (const { node, final } of nodes) node.textContent = final;
+      };
+      requestAnimationFrame(step);
+    };
+
+    if (!reduceMotion) {
+      document.querySelectorAll("[data-scramble]").forEach((el, i) => {
+        window.setTimeout(() => scramble(el, 950), 180 + i * 150);
+      });
+    }
+
     const bar = document.getElementById("progress");
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -540,6 +580,17 @@ const projects = [
         for (const entry of entries) {
           if (entry.isIntersecting) {
             entry.target.classList.add("in");
+            if (!reduceMotion) {
+              const title = entry.target.matches(".sec__head")
+                ? entry.target.querySelector(".sec__title")
+                : entry.target.matches(".contact__title")
+                  ? entry.target
+                  : null;
+              if (title && !title.dataset.decoded) {
+                title.dataset.decoded = "1";
+                scramble(title, 900);
+              }
+            }
             io.unobserve(entry.target);
           }
         }
@@ -554,10 +605,106 @@ const projects = [
     document.querySelectorAll(".project").forEach((card) => {
       card.addEventListener("pointermove", (e) => {
         const r = card.getBoundingClientRect();
-        card.style.setProperty("--mx", e.clientX - r.left + "px");
-        card.style.setProperty("--my", e.clientY - r.top + "px");
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        card.style.setProperty("--mx", x + "px");
+        card.style.setProperty("--my", y + "px");
+        card.style.setProperty("--rx", ((y / r.height - 0.5) * -3).toFixed(2) + "deg");
+        card.style.setProperty("--ry", ((x / r.width - 0.5) * 3).toFixed(2) + "deg");
+      });
+      card.addEventListener("pointerleave", () => {
+        card.style.setProperty("--rx", "0deg");
+        card.style.setProperty("--ry", "0deg");
       });
     });
+
+    if (!reduceMotion) {
+      document.querySelectorAll(".btn").forEach((btn) => {
+        btn.addEventListener("pointermove", (e) => {
+          const r = btn.getBoundingClientRect();
+          const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+          const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+          btn.style.setProperty("--mag-x", (dx * 5).toFixed(1) + "px");
+          btn.style.setProperty("--mag-y", (dy * 4).toFixed(1) + "px");
+        });
+        btn.addEventListener("pointerleave", () => {
+          btn.style.setProperty("--mag-x", "0px");
+          btn.style.setProperty("--mag-y", "0px");
+        });
+      });
+    }
+
+    if (window.matchMedia("(pointer: fine)").matches && !reduceMotion) {
+      const ring = document.querySelector(".cursor-hud__ring");
+      const dot = document.querySelector(".cursor-hud__dot");
+      const coords = document.querySelector(".cursor-hud__coords");
+      if (ring && dot && coords) {
+        document.documentElement.classList.add("has-cursor");
+        ring.style.opacity = "0";
+        dot.style.opacity = "0";
+        coords.style.opacity = "0";
+        let mx = window.innerWidth / 2;
+        let my = window.innerHeight / 2;
+        let sx = mx;
+        let sy = my;
+        window.addEventListener("pointermove", (e) => {
+          mx = e.clientX;
+          my = e.clientY;
+          ring.style.opacity = "1";
+          dot.style.opacity = "1";
+          coords.style.opacity = "0.7";
+          coords.textContent =
+            String(Math.round(mx)).padStart(4, "0") +
+            " · " +
+            String(Math.round(my)).padStart(4, "0");
+        });
+        document.addEventListener("pointerleave", () => {
+          ring.style.opacity = "0";
+          dot.style.opacity = "0";
+          coords.style.opacity = "0";
+        });
+        window.addEventListener("pointerdown", () => ring.classList.add("is-down"));
+        window.addEventListener("pointerup", () => ring.classList.remove("is-down"));
+        document.querySelectorAll("a, button").forEach((el) => {
+          el.addEventListener("pointerenter", () => ring.classList.add("is-active"));
+          el.addEventListener("pointerleave", () => ring.classList.remove("is-active"));
+        });
+        const trail = () => {
+          sx += (mx - sx) * 0.16;
+          sy += (my - sy) * 0.16;
+          ring.style.transform = "translate3d(" + sx + "px," + sy + "px,0)";
+          dot.style.transform = "translate3d(" + mx + "px," + my + "px,0)";
+          coords.style.transform = "translate3d(" + (mx + 16) + "px," + (my + 18) + "px,0)";
+          requestAnimationFrame(trail);
+        };
+        trail();
+      }
+    }
+
+    const counters = document.querySelectorAll("[data-count]");
+    if (counters.length && !reduceMotion) {
+      const countIO = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const el = entry.target;
+            const target = Number(el.dataset.count);
+            const start = performance.now();
+            const tick = (now) => {
+              const p = Math.min((now - start) / 1300, 1);
+              const eased = 1 - Math.pow(1 - p, 3);
+              el.textContent = String(Math.round(target * eased));
+              if (p < 1) requestAnimationFrame(tick);
+              else el.textContent = String(target);
+            };
+            requestAnimationFrame(tick);
+            countIO.unobserve(el);
+          }
+        },
+        { threshold: 0.8 },
+      );
+      counters.forEach((el) => countIO.observe(el));
+    }
 
     const canvas = document.getElementById("net");
     if (canvas && !reduceMotion) {
@@ -586,10 +733,29 @@ const projects = [
         }));
       };
 
+      const pointer = { x: -999, y: -999 };
+      const hero = canvas.parentElement;
+      hero.addEventListener("pointermove", (e) => {
+        const r = canvas.getBoundingClientRect();
+        pointer.x = e.clientX - r.left;
+        pointer.y = e.clientY - r.top;
+      });
+      hero.addEventListener("pointerleave", () => {
+        pointer.x = -999;
+        pointer.y = -999;
+      });
+
       let raf = 0;
       const draw = () => {
         ctx.clearRect(0, 0, w, h);
         for (const n of nodes) {
+          const pdx = n.x - pointer.x;
+          const pdy = n.y - pointer.y;
+          const pd = Math.hypot(pdx, pdy);
+          if (pd < 130 && pd > 0.1) {
+            n.x += (pdx / pd) * (1 - pd / 130) * 0.7;
+            n.y += (pdy / pd) * (1 - pd / 130) * 0.7;
+          }
           n.x += n.vx;
           n.y += n.vy;
           if (n.x < 0 || n.x > w) n.vx *= -1;
@@ -612,6 +778,27 @@ const projects = [
               ctx.stroke();
             }
           }
+        }
+        if (pointer.x > -100) {
+          for (const n of nodes) {
+            const d = Math.hypot(n.x - pointer.x, n.y - pointer.y);
+            if (d < 190) {
+              ctx.strokeStyle = "rgba(201,255,77," + (1 - d / 190) * 0.32 + ")";
+              ctx.lineWidth = 0.9;
+              ctx.beginPath();
+              ctx.moveTo(pointer.x, pointer.y);
+              ctx.lineTo(n.x, n.y);
+              ctx.stroke();
+            }
+          }
+          ctx.beginPath();
+          ctx.arc(pointer.x, pointer.y, 17, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(201,255,77,0.25)";
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(pointer.x, pointer.y, 2.6, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(201,255,77,0.95)";
+          ctx.fill();
         }
         for (const n of nodes) {
           ctx.beginPath();
