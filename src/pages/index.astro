@@ -220,15 +220,15 @@ const projects = [
 
       <div class="wrap hero__stats">
         <div class="stat">
-          <b><span data-count="3">3</span><em>+</em></b>
+          <b><span class="stat__num" data-count="3">3</span><em>+</em></b>
           <span>Years shipping software</span>
         </div>
         <div class="stat">
-          <b><span data-count="12">12</span>K<em>+</em></b>
+          <b><span class="stat__num" data-count="12">12</span>K<em>+</em></b>
           <span>Android app installs</span>
         </div>
         <div class="stat">
-          <b><span data-count="1">1</span>K<em>+</em></b>
+          <b><span class="stat__num" data-count="1">1</span>K<em>+</em></b>
           <span>Records in a RAG index</span>
         </div>
         <div class="stat">
@@ -708,6 +708,7 @@ const projects = [
 
       let raf = 0;
       const draw = () => {
+        const light = document.documentElement.dataset.theme === "light";
         ctx.clearRect(0, 0, w, h);
         for (const n of nodes) {
           const pdx = n.x - pointer.x;
@@ -731,7 +732,9 @@ const projects = [
             const d = Math.hypot(dx, dy);
             if (d < linkDist) {
               const alpha = (1 - d / linkDist) * 0.17;
-              ctx.strokeStyle = `rgba(201,255,77,${alpha})`;
+              ctx.strokeStyle = light
+                ? `rgba(74,122,11,${alpha * 1.7})`
+                : `rgba(201,255,77,${alpha})`;
               ctx.lineWidth = 0.8;
               ctx.beginPath();
               ctx.moveTo(a.x, a.y);
@@ -744,7 +747,9 @@ const projects = [
           for (const n of nodes) {
             const d = Math.hypot(n.x - pointer.x, n.y - pointer.y);
             if (d < 190) {
-              ctx.strokeStyle = "rgba(201,255,77," + (1 - d / 190) * 0.32 + ")";
+              ctx.strokeStyle = light
+                ? "rgba(74,122,11," + (1 - d / 190) * 0.4 + ")"
+                : "rgba(201,255,77," + (1 - d / 190) * 0.32 + ")";
               ctx.lineWidth = 0.9;
               ctx.beginPath();
               ctx.moveTo(pointer.x, pointer.y);
@@ -754,22 +759,28 @@ const projects = [
           }
           ctx.beginPath();
           ctx.arc(pointer.x, pointer.y, 17, 0, Math.PI * 2);
-          ctx.strokeStyle = "rgba(201,255,77,0.25)";
+          ctx.strokeStyle = light ? "rgba(74,122,11,0.35)" : "rgba(201,255,77,0.25)";
           ctx.stroke();
           ctx.beginPath();
           ctx.arc(pointer.x, pointer.y, 2.6, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(201,255,77,0.95)";
+          ctx.fillStyle = light ? "rgba(74,122,11,0.95)" : "rgba(201,255,77,0.95)";
           ctx.fill();
         }
         for (const n of nodes) {
           ctx.beginPath();
           ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-          ctx.fillStyle = n.hot ? "rgba(201,255,77,0.9)" : "rgba(190,200,180,0.5)";
+          ctx.fillStyle = light
+            ? n.hot
+              ? "rgba(74,122,11,0.9)"
+              : "rgba(60,70,45,0.45)"
+            : n.hot
+              ? "rgba(201,255,77,0.9)"
+              : "rgba(190,200,180,0.5)";
           ctx.fill();
           if (n.hot) {
             ctx.beginPath();
             ctx.arc(n.x, n.y, n.r + 4, 0, Math.PI * 2);
-            ctx.strokeStyle = "rgba(201,255,77,0.18)";
+            ctx.strokeStyle = light ? "rgba(74,122,11,0.22)" : "rgba(201,255,77,0.18)";
             ctx.stroke();
           }
         }
