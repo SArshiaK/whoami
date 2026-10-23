@@ -297,67 +297,461 @@ img {
   color: #07080a !important;
 }
 
-/* ---------- rail ---------- */
-.rail {
-  position: fixed;
-  left: 26px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 90;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.4rem;
-}
-
-.rail a,
-.rail span {
-  writing-mode: vertical-rl;
-  font-family: var(--mono);
-  font-size: 0.64rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--dim);
-  transition: color 0.25s;
-}
-
-.rail a:hover {
-  color: var(--accent);
-}
-
-.rail__line {
-  width: 1px;
-  height: 70px;
-  background: linear-gradient(to bottom, transparent, var(--line-strong), transparent);
-}
-
-/* ---------- hero ---------- */
-.hero {
+/* ---------- unified 3d scrollytelling journey ---------- */
+.journey-track {
   position: relative;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 130px 0 40px;
-  overflow: hidden;
+  height: 700vh;
 }
 
-#net {
+.journey-viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.journey__canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
-  opacity: 0.75;
-  mask-image: radial-gradient(ellipse 75% 75% at 62% 45%, #000 25%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 62% 45%, #000 25%, transparent 75%);
+  z-index: 1;
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.journey__canvas:active {
+  cursor: grabbing;
+}
+
+/* chapters / slides */
+.chapter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px clamp(1.2rem, 3vw, 3rem) 25px;
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(14px);
+  transform: translateY(36px) scale(0.96);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.chapter.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  filter: blur(0);
+  transform: translateY(0) scale(1);
+}
+
+.chapter__wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* chapter 2: stack grid */
+.chapter-stack__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+  max-width: 1050px;
+}
+
+.chapter-stack__col {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.stack-box {
+  padding: 1.1rem 1.35rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  background: rgba(12, 16, 11, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6);
+}
+
+.stack-box__label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.65rem;
+}
+
+.stack-box__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* chapter 3: experience list */
+.chapter-jobs {
+  display: grid;
+  gap: 1.1rem;
+  max-width: 820px;
+}
+
+.chapter-job {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: rgba(12, 16, 11, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6);
+  transition: border-color 0.3s;
+}
+
+.chapter-job:hover {
+  border-color: var(--accent);
+}
+
+.chapter-job__time {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.chapter-job__time small {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.62rem;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.chapter-job__role {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0 0 0.25rem;
+}
+
+.chapter-job__org {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: 0.55rem;
+}
+
+.chapter-job__desc {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+/* chapter 4: interactive work split-grid */
+.chapter-work {
+  max-width: 1100px;
+}
+
+.chapter-work__grid {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.sec__head--compact {
+  margin-bottom: 1.1rem;
+  display: block;
+}
+
+.sec__head--compact .sec__title {
+  font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+  line-height: 1;
+}
+
+.work-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.work-btn {
+  background: rgba(14, 18, 12, 0.55);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.65rem 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s var(--ease);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.work-btn:hover {
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.work-btn.is-active {
+  border-color: var(--accent);
+  background: rgba(201, 255, 77, 0.08);
+  box-shadow: 0 0 20px -8px var(--accent);
+}
+
+.work-btn__num {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.work-btn__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.work-btn__title {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 210px;
+}
+
+.work-btn__tag {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.work-display {
+  position: relative;
+  width: 100%;
+}
+
+.work-card {
+  display: none !important;
+}
+
+.work-card.is-active {
+  display: block !important;
+  animation: workCardFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes workCardFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.work-card.project {
+  background: rgba(14, 18, 12, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.7);
+  padding: 1.5rem 1.8rem;
+  border-radius: 18px;
+}
+
+/* chapter 5: education */
+.chapter-edu {
+  max-width: 780px;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.chapter-edu .edu__grid {
+  margin-bottom: 0.9rem;
+}
+
+.chapter-edu .edu__card {
+  padding: 1.4rem 1.6rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: rgba(12, 16, 11, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6);
+}
+
+.chapter-edu .edu__lab {
+  margin-top: 0;
+  padding: 1.1rem 1.4rem;
+}
+
+/* chapter 6: impact stats & contact */
+.chapter-contact {
+  text-align: center;
+  max-width: 820px;
+}
+
+.chapter-contact__mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--mono);
+  font-size: clamp(1.2rem, 2.5vw, 2.1rem);
+  color: var(--text);
+  padding: 0.8rem 1.6rem;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: rgba(14, 18, 12, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  margin: 1.8rem 0;
+  transition: all 0.3s;
+}
+
+.chapter-contact__mail:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 30px -10px var(--accent);
+}
+
+.chapter-contact__links {
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 2rem;
+}
+
+.chapter-contact__links a {
+  color: var(--muted);
+  transition: color 0.25s;
+}
+
+.chapter-contact__links a:hover {
+  color: var(--accent);
+}
+
+/* journey HUD / Scrubber */
+.journey__hud {
+  position: absolute;
+  left: clamp(1rem, 2.4vw, 2.4rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.hud__track {
+  width: 2px;
+  height: 160px;
+  background: var(--line);
+  position: relative;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.hud__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  transition: height 0.1s linear;
+}
+
+.hud__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.hud__item {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  text-align: left;
+  opacity: 0.4;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.hud__item:hover {
+  opacity: 0.8;
+}
+
+.hud__item.is-active {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.hud__idx {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.hud__label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.hud__scroll-cue {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  color: var(--dim);
+  opacity: 0.7;
+}
+
+.cue-arrow {
+  animation: hud-bounce 1.5s infinite;
 }
 
 .hero__inner {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1.25fr 0.85fr;
+  grid-template-columns: 1.2fr 0.8fr;
   gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
 }
@@ -1782,12 +2176,25 @@ img {
 
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
-  .rail {
+  .journey__hud {
     display: none;
   }
   .hero__inner {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.2rem;
+  }
+  .chapter-stack__grid {
+    grid-template-columns: 1fr;
+    max-height: 55vh;
+    overflow-y: auto;
+  }
+  .chapter-job {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .chapter-edu {
+    max-width: 100%;
+    margin: 0 auto;
   }
   .term {
     transform: none;

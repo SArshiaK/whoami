@@ -123,8 +123,47 @@ html[data-theme="light"] .term__bar {
   border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
+html[data-theme="light"] #threeCanvas,
 html[data-theme="light"] #net {
-  opacity: 0.8;
+  opacity: 0.9;
+}
+
+html[data-theme="light"] .stack-box,
+html[data-theme="light"] .chapter-job,
+html[data-theme="light"] .chapter-edu .edu__card,
+html[data-theme="light"] .chapter-contact__mail {
+  background: rgba(255, 254, 250, 0.94);
+  border-color: rgba(22, 26, 17, 0.16);
+  box-shadow: 0 16px 40px -15px rgba(22, 26, 17, 0.08);
+}
+
+html[data-theme="light"] .work-btn {
+  background: rgba(255, 254, 250, 0.82);
+  border-color: rgba(22, 26, 17, 0.12);
+}
+
+html[data-theme="light"] .work-btn:hover {
+  border-color: var(--accent);
+}
+
+html[data-theme="light"] .work-btn.is-active {
+  background: rgba(55, 101, 31, 0.08);
+  border-color: var(--accent);
+}
+
+html[data-theme="light"] .work-card.project {
+  background: rgba(255, 254, 250, 0.94);
+  border-color: rgba(22, 26, 17, 0.16);
+  box-shadow: 0 20px 50px -15px rgba(22, 26, 17, 0.12);
+}
+
+html[data-theme="light"] .hud__track {
+  background: rgba(22, 26, 17, 0.12);
+}
+
+html[data-theme="light"] .hud__fill {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
 }
 
 html[data-theme="light"] .marquee {
