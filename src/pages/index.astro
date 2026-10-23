@@ -533,7 +533,7 @@ const projects = [
       themeBtn?.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
       document
         .querySelector('meta[name="theme-color"]')
-        ?.setAttribute("content", light ? "#f3f2ec" : "#07080a");
+        ?.setAttribute("content", light ? "#f4f3ec" : "#07080a");
     };
     themeBtn?.addEventListener("click", () => {
       rootEl.dataset.theme = rootEl.dataset.theme === "light" ? "dark" : "light";
@@ -599,21 +599,13 @@ const projects = [
         coords.style.opacity = "0";
         let mx = window.innerWidth / 2;
         let my = window.innerHeight / 2;
-        let sx = mx;
-        let sy = my;
-        let firstMove = true;
         window.addEventListener("pointermove", (e) => {
           document.documentElement.classList.add("has-cursor");
           mx = e.clientX;
           my = e.clientY;
-          if (firstMove) {
-            firstMove = false;
-            sx = mx;
-            sy = my;
-          }
           ring.style.opacity = "1";
           dot.style.opacity = "1";
-          coords.style.opacity = "0.7";
+          coords.style.opacity = "0.85";
           coords.textContent =
             String(Math.round(mx)).padStart(4, "0") +
             " · " +
@@ -631,9 +623,7 @@ const projects = [
           el.addEventListener("pointerleave", () => ring.classList.remove("is-active"));
         });
         const trail = () => {
-          sx += (mx - sx) * 0.16;
-          sy += (my - sy) * 0.16;
-          ring.style.transform = "translate3d(" + sx + "px," + sy + "px,0)";
+          ring.style.transform = "translate3d(" + mx + "px," + my + "px,0)";
           dot.style.transform = "translate3d(" + mx + "px," + my + "px,0)";
           coords.style.transform = "translate3d(" + (mx + 16) + "px," + (my + 18) + "px,0)";
           requestAnimationFrame(trail);
@@ -733,7 +723,7 @@ const projects = [
             if (d < linkDist) {
               const alpha = (1 - d / linkDist) * 0.17;
               ctx.strokeStyle = light
-                ? `rgba(74,122,11,${alpha * 1.7})`
+                ? `rgba(55,101,31,${alpha * 1.7})`
                 : `rgba(201,255,77,${alpha})`;
               ctx.lineWidth = 0.8;
               ctx.beginPath();
@@ -748,7 +738,7 @@ const projects = [
             const d = Math.hypot(n.x - pointer.x, n.y - pointer.y);
             if (d < 190) {
               ctx.strokeStyle = light
-                ? "rgba(74,122,11," + (1 - d / 190) * 0.4 + ")"
+                ? "rgba(55,101,31," + (1 - d / 190) * 0.4 + ")"
                 : "rgba(201,255,77," + (1 - d / 190) * 0.32 + ")";
               ctx.lineWidth = 0.9;
               ctx.beginPath();
@@ -759,11 +749,11 @@ const projects = [
           }
           ctx.beginPath();
           ctx.arc(pointer.x, pointer.y, 17, 0, Math.PI * 2);
-          ctx.strokeStyle = light ? "rgba(74,122,11,0.35)" : "rgba(201,255,77,0.25)";
+          ctx.strokeStyle = light ? "rgba(55,101,31,0.35)" : "rgba(201,255,77,0.25)";
           ctx.stroke();
           ctx.beginPath();
           ctx.arc(pointer.x, pointer.y, 2.6, 0, Math.PI * 2);
-          ctx.fillStyle = light ? "rgba(74,122,11,0.95)" : "rgba(201,255,77,0.95)";
+          ctx.fillStyle = light ? "rgba(55,101,31,0.95)" : "rgba(201,255,77,0.95)";
           ctx.fill();
         }
         for (const n of nodes) {
@@ -771,8 +761,8 @@ const projects = [
           ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
           ctx.fillStyle = light
             ? n.hot
-              ? "rgba(74,122,11,0.9)"
-              : "rgba(60,70,45,0.45)"
+              ? "rgba(55,101,31,0.9)"
+              : "rgba(70,78,62,0.45)"
             : n.hot
               ? "rgba(201,255,77,0.9)"
               : "rgba(190,200,180,0.5)";
@@ -780,7 +770,7 @@ const projects = [
           if (n.hot) {
             ctx.beginPath();
             ctx.arc(n.x, n.y, n.r + 4, 0, Math.PI * 2);
-            ctx.strokeStyle = light ? "rgba(74,122,11,0.22)" : "rgba(201,255,77,0.18)";
+            ctx.strokeStyle = light ? "rgba(55,101,31,0.22)" : "rgba(201,255,77,0.18)";
             ctx.stroke();
           }
         }

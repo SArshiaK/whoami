@@ -513,7 +513,7 @@ img {
   margin: -20px 0 0 -20px;
   border: 1.5px solid #ffffff;
   border-radius: 50%;
-  mix-blend-mode: difference;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
   will-change: transform;
   transition:
     width 0.3s var(--ease),
@@ -527,7 +527,6 @@ img {
   width: 58px;
   height: 58px;
   margin: -29px 0 0 -29px;
-  border-color: #ffffff;
 }
 
 .cursor-hud__ring.is-down {
@@ -545,7 +544,7 @@ img {
   margin: -2.5px 0 0 -2.5px;
   border-radius: 50%;
   background: #ffffff;
-  mix-blend-mode: difference;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
 }
 
 .cursor-hud__coords {
@@ -556,7 +555,9 @@ img {
   font-size: 9px;
   letter-spacing: 0.12em;
   color: #ffffff;
-  mix-blend-mode: difference;
+  background: rgba(8, 10, 6, 0.55);
+  padding: 2px 4px;
+  border-radius: 3px;
   white-space: nowrap;
   opacity: 0.8;
 }
@@ -1506,18 +1507,6 @@ img {
   color: var(--accent);
 }
 
-[data-theme="light"] .cursor-hud__ring {
-  border-color: var(--accent);
-}
-
-[data-theme="light"] .cursor-hud__dot {
-  background: var(--accent);
-  box-shadow: 0 0 12px rgba(62, 107, 0, 0.45);
-}
-
-[data-theme="light"] .cursor-hud__coords {
-  opacity: 0.9;
-}
 /* ---------- light theme ---------- */
 [data-theme="light"] {
   color-scheme: light;
