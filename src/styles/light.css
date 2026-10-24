@@ -137,6 +137,12 @@ html[data-theme="light"] .chapter-contact__mail {
   box-shadow: 0 16px 40px -15px rgba(22, 26, 17, 0.08);
 }
 
+html[data-theme="light"] .chapter-contact::before {
+  background: rgba(252, 251, 246, 0.86);
+  border-color: rgba(22, 26, 17, 0.12);
+  box-shadow: 0 30px 70px -40px rgba(22, 26, 17, 0.28);
+}
+
 html[data-theme="light"] .work-btn {
   background: rgba(255, 254, 250, 0.82);
   border-color: rgba(22, 26, 17, 0.12);
