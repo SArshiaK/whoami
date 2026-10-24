@@ -2,14 +2,14 @@
 import Layout from "../layouts/Layout.astro";
 
 const stack = [
-  { k: "Full-stack", v: ["Nest.js", "Express.js", "Next.js", "React.js"] },
+  { k: "Frameworks", v: ["Nest.js", "Express.js", "Next.js", "React.js"] },
   { k: "ORM / ODM", v: ["Sequelize", "TypeORM", "Mongoose", "Prisma"] },
   { k: "Databases", v: ["PostgreSQL", "MongoDB", "MySQL", "Redis"] },
-  { k: "APIs", v: ["REST", "gRPC", "Swagger", "Postman", "SMS.ir", "PayPing", "IdPay", "Zibal"] },
+  { k: "APIs", v: ["REST", "gRPC", "Swagger", "SMS.ir", "PayPing", "IdPay", "Zibal"] },
   { k: "Real-time", v: ["Socket.IO", "gRPC services"] },
   { k: "AI & LLM", v: ["OpenAI-compatible APIs", "Ollama", "Embeddings", "RAG", "Qdrant", "ChromaDB", "Prompt engineering", "JSON mode"] },
   { k: "DevOps", v: ["Docker", "Kubernetes (basic)", "GitHub Actions", "GitLab CI"] },
-  { k: "Tooling", v: ["Cursor", "Claude Code"] },
+  { k: "Developer Tools", v: ["Postman", "Cursor", "Claude Code"] },
 ];
 
 const jobs = [
@@ -25,7 +25,7 @@ const jobs = [
     type: "Full-time",
     role: "Back-end Developer",
     org: "DPA · Dade Pardazi Azmoodeh Karan",
-    desc: "Server-side services, data pipelines and internal tools for legal, audit and financial workflows — from web crawlers and RAG assistants to Excel-driven automation.",
+    desc: "Server-side services, data pipelines and internal tools for legal, audit and financial workflows — from web crawlers and RAG assistants to automated financial data pipelines.",
   },
   {
     time: "Apr — Jun 2023",
@@ -50,8 +50,7 @@ const projects = [
       "Built the embedding pipeline with Sentence Transformers and stored vectors in ChromaDB.",
       "Every message triggers a vector search; the matches go into a prompt the LLM answers from, with local and API models plus chat history.",
       "Added BM25 keyword search in parallel with semantic search to raise retrieval accuracy.",
-      "Used micro-batching to keep embedding fast under many simultaneous requests.",
-      "Added an LLM step that detects which data categories a question belongs to before retrieval.",
+      "Implemented micro-batching to group near-simultaneous embedding requests within tight time windows, maintaining high throughput under concurrent traffic.",
     ],
     stack: ["Sentence Transformers", "ChromaDB", "BM25", "Local & API LLMs", "Micro-batching"],
   },
@@ -80,11 +79,11 @@ const projects = [
     summary:
       "Internal tools that replaced manual accounting and audit work with queued, verifiable pipelines.",
     points: [
-      "Bond yield (YTM/YTC): users upload an Excel file instead of entering each record by hand; the system fetches the result for every record and runs large files through a background queue.",
+      "Bond yield: automated bulk data ingestion via background queues with instant yield calculations, replacing manual record-by-record entry.",
       "Fund threshold checks: regulatory limits are verified automatically from the uploaded fund assets.",
-      "Audit automation (in progress): uploading a company's detailed accounting documents runs all calculations and checklists automatically.",
+      "Audit automation: uploading a company's detailed accounting documents runs all calculations and checklists automatically.",
     ],
-    stack: ["Node.js", "Background job queues", "Excel processing"],
+    stack: ["Node.js", "Background job queues", "Batch Data Processing"],
   },
   {
     n: "04",
@@ -101,12 +100,16 @@ const projects = [
     n: "05",
     tag: "SHIPPED / ANDROID",
     title: "Pomodoro Study Planner",
-    org: "Personal project · Cafe Bazaar",
+    org: "Personal project",
     when: "12K+ INSTALLS",
     summary:
       "Designed, built and published a Pomodoro study app with a focus timer, study statistics, per-subject progress tracking and light/dark themes.",
+    links: [
+      { label: "Cafe Bazaar", url: "https://cafebazaar.ir/app/com.rntest" },
+      { label: "Myket", url: "https://myket.ir/app/com.rntest" },
+    ],
     points: [],
-    stack: ["React Native", "Cafe Bazaar"],
+    stack: ["React Native", "Android"],
   },
 ];
 ---
@@ -287,10 +290,6 @@ const projects = [
                   closely with front-end and cross-functional teams, and I like
                   owning a feature from schema to shipped behaviour.
                 </p>
-                <p>
-                  Currently at Faraz Co, studying for an M.Sc. at Iran University of
-                  Science and Technology.
-                </p>
               </div>
 
               <div class="jsoncard">
@@ -396,7 +395,7 @@ const projects = [
                   <h3 class="chapter-job__role">Distributed Systems Lab · IUST</h3>
                   <div class="chapter-job__org">Federated Learning &amp; Self-Healing</div>
                   <p class="chapter-job__desc">
-                    Researching self-healing distributed algorithms and federated learning backplanes under Prof. M. Sharifi.
+                    Researching self-healing distributed algorithms and federated learning backplanes under the supervision of Prof. M. Sharifi.
                   </p>
                 </div>
               </a>
@@ -448,11 +447,33 @@ const projects = [
                     </div>
                     <h3 class="project__title">{p.title}</h3>
                     <div class="project__org">{p.org}</div>
-                    <div class="project__body">
-                      <p class="project__summary">{p.summary}</p>
+                    <div class:list={["project__body", { "project__body--single": p.points.length === 0 }]}>
+                      <div>
+                        <p class="project__summary">{p.summary}</p>
+                        {p.links && p.links.length > 0 && (
+                          <div class="project__published">
+                            <span class="project__published-label">Published:</span>
+                            <div class="project__published-links">
+                              {p.links.map((link) => (
+                                <a
+                                  href={link.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  class="project__link"
+                                >
+                                  {link.label}
+                                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                  </svg>
+                                </a>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
                       {p.points.length > 0 && (
                         <ul class="project__list">
-                          {p.points.slice(0, 3).map((pt) => (
+                          {p.points.map((pt) => (
                             <li>{pt}</li>
                           ))}
                         </ul>

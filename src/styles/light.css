@@ -276,6 +276,18 @@ html[data-theme="light"] .project__stack span {
   background: rgba(255, 255, 255, 0.55);
 }
 
+html[data-theme="light"] .project__link {
+  color: var(--accent);
+  border-color: rgba(22, 26, 17, 0.16);
+  background: rgba(55, 101, 31, 0.04);
+}
+
+html[data-theme="light"] .project__link:hover {
+  border-color: var(--accent);
+  background: rgba(55, 101, 31, 0.1);
+  color: var(--accent);
+}
+
 html[data-theme="light"] .project__tag {
   color: var(--accent);
   border-color: rgba(55, 101, 31, 0.32);
