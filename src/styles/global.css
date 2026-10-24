@@ -379,7 +379,7 @@ img {
   padding: 1.1rem 1.35rem;
   border: 1px solid var(--line-strong);
   border-radius: 14px;
-  background: rgba(12, 16, 11, 0.78);
+  background: rgba(10, 13, 9, 0.95);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6);
@@ -415,7 +415,7 @@ img {
   padding: 1.25rem 1.5rem;
   border: 1px solid var(--line-strong);
   border-radius: 16px;
-  background: rgba(12, 16, 11, 0.78);
+  background: rgba(10, 13, 9, 0.95);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6);
@@ -492,7 +492,7 @@ img {
 }
 
 .work-btn {
-  background: rgba(14, 18, 12, 0.55);
+  background: rgba(12, 15, 10, 0.86);
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 0.65rem 0.95rem;
@@ -507,8 +507,7 @@ img {
 }
 
 .work-btn:hover {
-  border-color: var(--line-strong);
-  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--accent);
 }
 
 .work-btn.is-active {
@@ -575,19 +574,20 @@ img {
 }
 
 .work-card.project {
-  background: rgba(14, 18, 12, 0.78);
+  background: rgba(10, 13, 9, 0.95);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid var(--line-strong);
   box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.7);
   padding: 1.5rem 1.8rem;
   border-radius: 18px;
+  transition: border-color 0.3s;
 }
 
 /* chapter 5: education */
 .chapter-edu {
-  max-width: 780px;
-  margin-left: 0;
+  max-width: 820px;
+  margin-left: auto;
   margin-right: auto;
 }
 
@@ -599,7 +599,7 @@ img {
   padding: 1.4rem 1.6rem;
   border: 1px solid var(--line-strong);
   border-radius: 16px;
-  background: rgba(12, 16, 11, 0.78);
+  background: rgba(10, 13, 9, 0.95);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6);
@@ -626,7 +626,7 @@ img {
   padding: 0.8rem 1.6rem;
   border: 1px solid var(--line);
   border-radius: 99px;
-  background: rgba(14, 18, 12, 0.65);
+  background: rgba(10, 13, 9, 0.9);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   margin: 1.8rem 0;
@@ -1516,14 +1516,7 @@ img {
 }
 
 .project:hover {
-  border-color: rgba(201, 255, 77, 0.28);
-  background: rgba(255, 255, 255, 0.026);
-  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
-    translateY(-3px);
-}
-
-.project:hover::after {
-  opacity: 1;
+  border-color: var(--accent);
 }
 
 .project--featured {
@@ -1685,8 +1678,7 @@ img {
 }
 
 .edu__card:hover {
-  border-color: var(--line-strong);
-  background: rgba(255, 255, 255, 0.028);
+  border-color: var(--accent);
 }
 
 .edu__time {
@@ -2058,9 +2050,7 @@ img {
 }
 
 [data-theme="light"] .project:hover {
-  background: #ffffff;
-  border-color: rgba(110, 160, 0, 0.4);
-  box-shadow: 0 30px 60px -40px rgba(30, 40, 10, 0.4);
+  border-color: var(--accent);
 }
 
 [data-theme="light"] .project::after {
@@ -2104,9 +2094,7 @@ img {
 }
 
 [data-theme="light"] .edu__card:hover {
-  background: #ffffff;
-  border-color: rgba(110, 160, 0, 0.35);
-  box-shadow: 0 24px 60px -50px rgba(30, 40, 10, 0.55);
+  border-color: var(--accent);
 }
 
 [data-theme="light"] .edu__lab:hover .edu__lab__go {

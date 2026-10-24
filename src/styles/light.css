@@ -239,11 +239,7 @@ html[data-theme="light"] .project {
 }
 
 html[data-theme="light"] .project:hover {
-  background: #fffefb;
-  border-color: rgba(55, 101, 31, 0.34);
-  box-shadow:
-    0 2px 4px rgba(24, 30, 18, 0.04),
-    0 28px 60px -42px rgba(24, 30, 18, 0.32);
+  border-color: var(--accent);
 }
 
 html[data-theme="light"] .project::after {
@@ -293,9 +289,7 @@ html[data-theme="light"] .edu__card {
 }
 
 html[data-theme="light"] .edu__card:hover {
-  background: #fffefb;
-  border-color: rgba(55, 101, 31, 0.3);
-  box-shadow: 0 24px 50px -44px rgba(24, 30, 18, 0.32);
+  border-color: var(--accent);
 }
 
 html[data-theme="light"] .edu__time {
