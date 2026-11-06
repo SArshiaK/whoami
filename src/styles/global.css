@@ -356,10 +356,33 @@ img {
   transform: translateY(0) scale(1);
 }
 
+/* Tall chapters (Experience/Education/…) scroll inside the pinned viewport */
+.chapter.is-active.chapter--scrollable {
+  justify-content: flex-start;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+  padding-top: 88px;
+  padding-bottom: 36px;
+}
+
 .chapter__wrap {
   width: 100%;
   max-width: 1180px;
   margin: 0 auto;
+}
+
+.chapter--scrollable .chapter__wrap {
+  padding-bottom: 2rem;
+}
+
+/* Keep chapter content clear of the left journey HUD on desktop */
+@media (min-width: 1101px) {
+  .chapter {
+    padding-left: max(clamp(1.2rem, 3vw, 3rem), 9.75rem);
+  }
 }
 
 /* chapter 2: stack grid */
@@ -442,6 +465,10 @@ img {
 }
 
 .chapter-job__role {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--text);
@@ -449,11 +476,59 @@ img {
 }
 
 .chapter-job__org {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  flex-wrap: nowrap;
+  min-width: 0;
   font-family: var(--mono);
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   color: var(--accent);
   margin-bottom: 0.55rem;
+}
+
+.chapter-job__org .brand-logo {
+  margin-top: 0.05rem;
+}
+
+.chapter-job__org span {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.45;
+}
+
+.brand-logo {
+  width: 2.75rem;
+  height: 2.75rem;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 0;
+  background: transparent;
+  filter: drop-shadow(0 0 0.6px rgba(255, 255, 255, 0.28));
+}
+
+.brand-logo--inline {
+  display: inline-block;
+  vertical-align: -0.55em;
+}
+
+.brand-logo--sm {
+  width: 1.85rem;
+  height: 1.85rem;
+}
+
+.brand-logo--store {
+  width: 1.45rem;
+  height: 1.45rem;
+  filter: none;
+}
+
+.project__org .brand-logo {
+  width: 2.35rem;
+  height: 2.35rem;
 }
 
 .chapter-job__desc {
@@ -775,6 +850,8 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
+  max-width: 100%;
+  box-sizing: border-box;
   font-family: var(--mono);
   font-size: 0.7rem;
   letter-spacing: 0.16em;
@@ -1160,6 +1237,10 @@ img {
   border-top: 1px solid var(--line);
 }
 
+.hero__stats--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .stat {
   padding: 1.5rem 0 0;
   border-right: 1px solid var(--line);
@@ -1194,11 +1275,24 @@ img {
   color: var(--dim);
 }
 
+.stat__meta {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  line-height: 1;
+}
+
 .stat__num {
   display: inline-block;
   font: inherit;
   color: inherit;
   letter-spacing: inherit;
+}
+
+.brand-logo--meta {
+  width: 1.75rem;
+  height: 1.75rem;
 }
 
 /* ---------- marquee ---------- */
@@ -1595,6 +1689,9 @@ img {
 }
 
 .project__org {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
   font-family: var(--mono);
   font-size: 0.68rem;
   letter-spacing: 0.1em;
@@ -1741,6 +1838,9 @@ img {
 }
 
 .edu__time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: var(--mono);
   font-size: 0.65rem;
   letter-spacing: 0.12em;
@@ -1758,9 +1858,24 @@ img {
 }
 
 .edu__school {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  min-width: 0;
   font-size: 0.86rem;
   color: var(--muted);
   margin: 0;
+}
+
+.edu__school .brand-logo {
+  margin-top: 0.1rem;
+}
+
+.edu__school span {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .edu__meta {
@@ -2223,38 +2338,149 @@ img {
 
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
+  /* Drop sticky scrollytelling: normal stacked document flow */
+  .journey-track {
+    height: auto;
+  }
+
+  .journey-viewport {
+    position: relative;
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+
+  .journey__canvas,
   .journey__hud {
     display: none;
   }
+
+  .chapter,
+  .chapter.is-active {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    pointer-events: auto;
+    filter: none;
+    transform: none;
+    overflow: visible;
+    height: auto;
+    min-height: 0;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 5.5rem 1.15rem 3.25rem;
+    transition: none;
+  }
+
+  .chapter__wrap {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
   .hero__inner {
     grid-template-columns: 1fr;
     gap: 2.2rem;
   }
+
   .chapter-stack__grid {
     grid-template-columns: 1fr;
-    max-height: 55vh;
-    overflow-y: auto;
+    max-height: none;
+    overflow: visible;
   }
+
   .chapter-job {
     grid-template-columns: 1fr;
-    gap: 0.5rem;
+    gap: 0.55rem;
+    padding: 1.05rem 1.1rem;
   }
+
+  .chapter-jobs {
+    max-width: 100%;
+  }
+
+  .chapter-job__time {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.45rem 0.75rem;
+  }
+
+  .chapter-job__time small {
+    display: inline;
+    margin-top: 0;
+  }
+
+  .brand-logo {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
   .chapter-edu {
     max-width: 100%;
     margin: 0 auto;
   }
+
+  .chapter-work__grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .work-btn__title {
+    max-width: none;
+    white-space: normal;
+  }
+
+  .work-card.project {
+    padding: 1.2rem 1.15rem;
+  }
+
   .term {
     transform: none;
-    max-width: 560px;
+    max-width: 100%;
   }
+
   .hero__inner > *:first-child {
-    max-width: 720px;
+    max-width: 100%;
   }
+
   .about__grid {
     grid-template-columns: 1fr;
   }
+
   .jsoncard {
-    max-width: 560px;
+    max-width: 100%;
+  }
+
+  .hero__actions {
+    width: 100%;
+  }
+
+  .hero__actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    white-space: normal;
+    line-height: 1.35;
+    border-radius: 14px;
+  }
+
+  .hero__title {
+    font-size: clamp(2.15rem, 11vw, 3.4rem);
+    overflow-wrap: anywhere;
+  }
+
+  .chapter-job__role {
+    align-items: flex-start;
+  }
+
+  .chapter-job__role .brand-logo {
+    margin-top: 0.1rem;
   }
 }
 
@@ -2262,53 +2488,149 @@ img {
   .nav__links a:not(.nav__cta) {
     display: none;
   }
+
+  .nav__inner {
+    padding-inline: 0.2rem;
+  }
+
+  .chapter,
+  .chapter.is-active {
+    padding: 5rem 0.95rem 2.75rem;
+  }
+
   .hero {
     padding-top: 110px;
   }
-  .hero__stats {
-    grid-template-columns: 1fr 1fr;
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
   }
+
+  .hero__actions .btn {
+    width: 100%;
+  }
+
+  .hero__stats,
+  .hero__stats--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__stats--3 .stat:last-child {
+    grid-column: auto;
+  }
+
   .stat {
-    padding-bottom: 1.2rem;
+    padding: 1.1rem 0;
+    padding-right: 0;
+    border-right: 0;
     border-bottom: 1px solid var(--line);
   }
-  .stat:nth-child(2n) {
-    border-right: 0;
+
+  .stat:last-child {
+    border-bottom: 0;
   }
+
   .project__body {
     grid-template-columns: 1fr;
     gap: 1.2rem;
   }
+
   .edu__grid {
     grid-template-columns: 1fr;
   }
-  .stack__row {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
+
+  .edu__card {
+    padding: 1.25rem 1.1rem;
   }
-  .job {
-    grid-template-columns: 1fr;
-    gap: 0.6rem;
+
+  .chapter-edu .edu__card {
+    padding: 1.2rem 1.1rem;
   }
-  .sec__head {
+
+  .edu__meta div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .edu__lab {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
+
+  .edu__lab .edu__school {
+    max-width: none;
+  }
+
+  .edu__lab__go {
+    width: 100%;
+    text-align: center;
+  }
+
+  .brand-logo {
+    width: 1.9rem;
+    height: 1.9rem;
+  }
+
+  .brand-logo--sm,
+  .brand-logo--meta {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  .stack__row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .job {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .sec__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .sec__title {
+    font-size: clamp(1.7rem, 8vw, 2.2rem);
+  }
+
   .chapter-contact::before {
-    inset: -1.2rem -1rem -1rem;
+    inset: -1.2rem -0.6rem -1rem;
     border-radius: 22px;
   }
+
   .sec__note {
     text-align: left;
   }
+
   .project__top {
     flex-wrap: wrap;
   }
+
   .project__when {
     width: 100%;
     text-align: left;
     margin-left: 0;
+  }
+
+  .chapter-contact__links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem 1.1rem;
+  }
+
+  .foot {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.55rem;
   }
 }
 

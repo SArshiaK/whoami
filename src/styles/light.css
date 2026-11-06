@@ -389,3 +389,12 @@ html[data-theme="light"] button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
+
+html[data-theme="light"] .brand-logo {
+  background: transparent;
+  filter: drop-shadow(0 1px 1px rgba(22, 26, 17, 0.12));
+}
+
+html[data-theme="light"] .brand-logo--store {
+  filter: none;
+}

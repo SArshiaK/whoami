@@ -18,6 +18,7 @@ const jobs = [
     type: "Part-time",
     role: "Software Engineer",
     org: "Faraz Co · Iran Zamin Bank Technology Development",
+    logo: { src: "/logos/faraz.png", alt: "Faraz" },
     desc: "Back-end engineering with a focus on LLM features in production — retrieval pipelines, embedding services and support tooling built for real users.",
   },
   {
@@ -32,6 +33,7 @@ const jobs = [
     type: "Full-time",
     role: "Back-end Developer Intern",
     org: "IZICenter · Iran Zamin Bank Innovation Center",
+    logo: { src: "/logos/iranzamin.png", alt: "Iran Zamin Bank" },
     desc: "Started at the bank's innovation center: back-end features, internal panels, and the first release of a published Android app.",
   },
 ];
@@ -42,6 +44,7 @@ const projects = [
     tag: "RAG / LLM",
     title: "Troubleshooting Support Chatbot",
     org: "Faraz Co · pre-production testing",
+    logo: { src: "/logos/faraz.png", alt: "Faraz" },
     when: "2026",
     featured: true,
     summary:
@@ -90,6 +93,7 @@ const projects = [
     tag: "INTERNAL TOOLS",
     title: "Admin Panels & Reporting",
     org: "IZICenter · Faraz Co",
+    logo: { src: "/logos/iranzamin.png", alt: "Iran Zamin Bank" },
     when: "2023 — NOW",
     summary:
       "Internal admin panels with data display and reporting features, used by operations teams behind the scenes.",
@@ -105,8 +109,16 @@ const projects = [
     summary:
       "Designed, built and published a Pomodoro study app with a focus timer, study statistics, per-subject progress tracking and light/dark themes.",
     links: [
-      { label: "Cafe Bazaar", url: "https://cafebazaar.ir/app/com.rntest" },
-      { label: "Myket", url: "https://myket.ir/app/com.rntest" },
+      {
+        label: "Cafe Bazaar",
+        url: "https://cafebazaar.ir/app/com.rntest",
+        logo: { src: "/logos/bazaar.png", alt: "Cafe Bazaar" },
+      },
+      {
+        label: "Myket",
+        url: "https://myket.ir/app/com.rntest",
+        logo: { src: "/logos/myket.png", alt: "Myket" },
+      },
     ],
     points: [],
     stack: ["React Native", "Android"],
@@ -130,7 +142,7 @@ const projects = [
     <div class="wrap nav__inner">
       <a class="brand" href="#top" aria-label="Back to top">
         <span class="brand__dot"></span>
-        AMK<span class="mono" style="color:var(--dim)">/ eng</span>
+        AMK
       </a>
       <div class="nav__end">
         <nav class="nav__links" aria-label="Sections">
@@ -374,7 +386,20 @@ const projects = [
                   </div>
                   <div>
                     <h3 class="chapter-job__role">{job.role}</h3>
-                    <div class="chapter-job__org">{job.org}</div>
+                    <div class="chapter-job__org">
+                      {job.logo && (
+                        <img
+                          class="brand-logo"
+                          src={`${job.logo.src}?v=3`}
+                          alt=""
+                          width="44"
+                          height="44"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      )}
+                      <span>{job.org}</span>
+                    </div>
                     <p class="chapter-job__desc">{job.desc}</p>
                   </div>
                 </article>
@@ -392,7 +417,18 @@ const projects = [
                   <small>Research</small>
                 </div>
                 <div>
-                  <h3 class="chapter-job__role">Distributed Systems Lab · IUST</h3>
+                  <h3 class="chapter-job__role">
+                    <img
+                      class="brand-logo brand-logo--inline"
+                      src="/logos/iust.png?v=3"
+                      alt=""
+                      width="44"
+                      height="44"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    Distributed Systems Lab · IUST
+                  </h3>
                   <div class="chapter-job__org">Federated Learning &amp; Self-Healing</div>
                   <p class="chapter-job__desc">
                     Researching self-healing distributed algorithms and federated learning backplanes under the supervision of Prof. M. Sharifi.
@@ -446,7 +482,20 @@ const projects = [
                       <span class="project__when">{p.when}</span>
                     </div>
                     <h3 class="project__title">{p.title}</h3>
-                    <div class="project__org">{p.org}</div>
+                    <div class="project__org">
+                      {p.logo && (
+                        <img
+                          class="brand-logo"
+                          src={`${p.logo.src}?v=3`}
+                          alt=""
+                          width="40"
+                          height="40"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      )}
+                      <span>{p.org}</span>
+                    </div>
                     <div class:list={["project__body", { "project__body--single": p.points.length === 0 }]}>
                       <div>
                         <p class="project__summary">{p.summary}</p>
@@ -461,6 +510,17 @@ const projects = [
                                   rel="noreferrer"
                                   class="project__link"
                                 >
+                                  {link.logo && (
+                                    <img
+                                      class="brand-logo brand-logo--store"
+                                      src={`${link.logo.src}?v=3`}
+                                      alt=""
+                                      width="24"
+                                      height="24"
+                                      loading="lazy"
+                                      decoding="async"
+                                    />
+                                  )}
                                   {link.label}
                                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                     <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -506,7 +566,18 @@ const projects = [
               <article class="edu__card">
                 <span class="edu__time">2025 — Present</span>
                 <h3 class="edu__degree">M.Sc., Computer Software Engineering</h3>
-                <p class="edu__school">Iran University of Science and Technology</p>
+                <p class="edu__school">
+                  <img
+                    class="brand-logo"
+                    src="/logos/iust.png?v=3"
+                    alt=""
+                    width="44"
+                    height="44"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span>Iran University of Science and Technology</span>
+                </p>
                 <div class="edu__meta">
                   <div><span>Seminar</span><b>Self-healing in federated learning</b></div>
                   <div><span>Thesis</span><b>To be determined</b></div>
@@ -516,7 +587,18 @@ const projects = [
               <article class="edu__card">
                 <span class="edu__time">2020 — 2025</span>
                 <h3 class="edu__degree">B.Sc., Computer Engineering</h3>
-                <p class="edu__school">Shahed University</p>
+                <p class="edu__school">
+                  <img
+                    class="brand-logo"
+                    src="/logos/shahed.png?v=3"
+                    alt=""
+                    width="44"
+                    height="44"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span>Shahed University</span>
+                </p>
                 <div class="edu__meta">
                   <div><span>Final project</span><b>University job-board platform</b></div>
                   <div><span>Presented to</span><b>Faculty panel</b></div>
@@ -532,7 +614,18 @@ const projects = [
               style="text-decoration:none;"
             >
               <div>
-                <span class="edu__time">Lab · IUST</span>
+                <span class="edu__time">
+                  <img
+                    class="brand-logo brand-logo--sm"
+                    src="/logos/iust.png?v=3"
+                    alt=""
+                    width="32"
+                    height="32"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  Lab · IUST
+                </span>
                 <h3 class="edu__degree">Distributed Systems Lab</h3>
                 <p class="edu__school">
                   Part of the Distributed Systems Lab team — around federated learning and
@@ -562,7 +655,7 @@ const projects = [
               TESTED IN PRODUCTION.<br /><em>GROUNDED IN SCIENCE.</em>
             </h2>
 
-            <div class="hero__stats hero__stats--interactive" style="margin-top:0.5rem; margin-bottom:1.8rem">
+            <div class="hero__stats hero__stats--interactive hero__stats--3" style="margin-top:0.5rem; margin-bottom:1.8rem">
               <div class="stat">
                 <b><span class="stat__num" data-count="3">3</span><em>+</em></b>
                 <span>Years shipping software</span>
@@ -572,12 +665,19 @@ const projects = [
                 <span>Android app installs</span>
               </div>
               <div class="stat">
-                <b><span class="stat__num" data-count="1">1</span>K<em>+</em></b>
-                <span>Records in a RAG index</span>
-              </div>
-              <div class="stat">
                 <b>M.Sc<em>.</em></b>
-                <span>IUST · 2025 — present</span>
+                <span class="stat__meta">
+                  <img
+                    class="brand-logo brand-logo--meta"
+                    src="/logos/iust.png?v=5"
+                    alt=""
+                    width="28"
+                    height="28"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span>IUST · 2025 — present</span>
+                </span>
               </div>
             </div>
 
@@ -719,8 +819,72 @@ const projects = [
     let targetProgress = 0;
     let scrollProgress = 0;
 
+    const isStackedLayout = () => window.matchMedia("(max-width: 1100px)").matches;
+
+    const syncChapterScrollability = (ch) => {
+      if (!ch || isStackedLayout()) {
+        ch?.classList.remove("chapter--scrollable");
+        return;
+      }
+      const wrap = ch.querySelector(".chapter__wrap");
+      if (!wrap) return;
+      const styles = getComputedStyle(ch);
+      const padY =
+        (parseFloat(styles.paddingTop) || 0) + (parseFloat(styles.paddingBottom) || 0);
+      const needsScroll = wrap.scrollHeight + padY > ch.clientHeight + 8;
+      ch.classList.toggle("chapter--scrollable", needsScroll);
+      if (!needsScroll) ch.scrollTop = 0;
+    };
+
+    const syncStackedChapters = () => {
+      chapters.forEach((ch) => {
+        ch?.classList.add("is-active");
+        ch?.classList.remove("chapter--scrollable");
+      });
+      hudItems.forEach((btn) => btn.classList.remove("is-active"));
+    };
+
+    // Keep wheel/trackpad on tall chapters until content ends, then continue page scroll
+    chapters.forEach((ch) => {
+      if (!ch) return;
+      ch.addEventListener(
+        "wheel",
+        (e) => {
+          if (isStackedLayout() || !ch.classList.contains("is-active")) return;
+          if (!ch.classList.contains("chapter--scrollable")) return;
+
+          let delta = e.deltaY;
+          if (e.deltaMode === 1) delta *= 16; // lines
+          if (e.deltaMode === 2) delta *= ch.clientHeight; // pages
+
+          const atTop = ch.scrollTop <= 0;
+          const atBottom = ch.scrollTop + ch.clientHeight >= ch.scrollHeight - 2;
+          const scrollingDown = delta > 0;
+
+          if ((scrollingDown && !atBottom) || (!scrollingDown && !atTop)) {
+            e.preventDefault();
+            e.stopPropagation();
+            ch.scrollTop += delta;
+          }
+        },
+        { passive: false, capture: true },
+      );
+    });
+
     const updateScrollytelling = () => {
       if (!journeyTrack) return;
+
+      // Mobile/tablet: chapters are a normal stacked page
+      if (isStackedLayout()) {
+        syncStackedChapters();
+        const contact = document.getElementById("ch-6");
+        if (contact) {
+          const r = contact.getBoundingClientRect();
+          if (r.top < window.innerHeight * 0.72) triggerCounters();
+        }
+        return;
+      }
+
       const rect = journeyTrack.getBoundingClientRect();
       const scrollDist = rect.height - window.innerHeight;
       if (scrollDist <= 0) return;
@@ -739,6 +903,11 @@ const projects = [
           if (ch) {
             ch.classList.toggle("is-active", idx === currentChapter);
             ch.scrollTop = 0;
+            if (idx === currentChapter) {
+              requestAnimationFrame(() => syncChapterScrollability(ch));
+            } else {
+              ch.classList.remove("chapter--scrollable");
+            }
           }
         });
         hudItems.forEach((btn, idx) => {
@@ -747,10 +916,16 @@ const projects = [
         if (currentChapter === 6) {
           triggerCounters();
         }
+      } else {
+        syncChapterScrollability(chapters[currentChapter]);
       }
     };
 
     window.addEventListener("scroll", updateScrollytelling, { passive: true });
+    window.addEventListener("resize", () => {
+      updateScrollytelling();
+      if (!isStackedLayout()) syncChapterScrollability(chapters[currentChapter]);
+    }, { passive: true });
     updateScrollytelling();
 
     // Side HUD Jump Navigation
@@ -762,6 +937,15 @@ const projects = [
     });
 
     const jumpToChapter = (idx) => {
+      const target = chapters[idx];
+      if (!target) return;
+
+      if (isStackedLayout()) {
+        const top = window.scrollY + target.getBoundingClientRect().top - 72;
+        window.scrollTo({ top, behavior: "smooth" });
+        return;
+      }
+
       if (!journeyTrack) return;
       const rect = journeyTrack.getBoundingClientRect();
       const trackTop = window.scrollY + rect.top;
