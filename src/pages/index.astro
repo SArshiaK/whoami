@@ -1,6 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+const asset = (path: string) =>
+  `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+
 const stack = [
   { k: "Frameworks", v: ["Nest.js", "Express.js", "Next.js", "React.js"] },
   { k: "ORM / ODM", v: ["Sequelize", "TypeORM", "Mongoose", "Prisma"] },
@@ -18,7 +21,7 @@ const jobs = [
     type: "Part-time",
     role: "Software Engineer",
     org: "Faraz Co · Iran Zamin Bank Technology Development",
-    logo: { src: "/logos/faraz.png", alt: "Faraz" },
+    logo: { src: asset("logos/faraz.png"), alt: "Faraz" },
     desc: "Back-end engineering with a focus on LLM features in production — retrieval pipelines, embedding services and support tooling built for real users.",
   },
   {
@@ -33,7 +36,7 @@ const jobs = [
     type: "Full-time",
     role: "Back-end Developer Intern",
     org: "IZICenter · Iran Zamin Bank Innovation Center",
-    logo: { src: "/logos/iranzamin.png", alt: "Iran Zamin Bank" },
+    logo: { src: asset("logos/iranzamin.png"), alt: "Iran Zamin Bank" },
     desc: "Started at the bank's innovation center: back-end features, internal panels, and the first release of a published Android app.",
   },
 ];
@@ -44,7 +47,7 @@ const projects = [
     tag: "RAG / LLM",
     title: "Troubleshooting Support Chatbot",
     org: "Faraz Co · pre-production testing",
-    logo: { src: "/logos/faraz.png", alt: "Faraz" },
+    logo: { src: asset("logos/faraz.png"), alt: "Faraz" },
     when: "2026",
     featured: true,
     summary:
@@ -93,7 +96,7 @@ const projects = [
     tag: "INTERNAL TOOLS",
     title: "Admin Panels & Reporting",
     org: "IZICenter · Faraz Co",
-    logo: { src: "/logos/iranzamin.png", alt: "Iran Zamin Bank" },
+    logo: { src: asset("logos/iranzamin.png"), alt: "Iran Zamin Bank" },
     when: "2023 — NOW",
     summary:
       "Internal admin panels with data display and reporting features, used by operations teams behind the scenes.",
@@ -112,12 +115,12 @@ const projects = [
       {
         label: "Cafe Bazaar",
         url: "https://cafebazaar.ir/app/com.rntest",
-        logo: { src: "/logos/bazaar.png", alt: "Cafe Bazaar" },
+        logo: { src: asset("logos/bazaar.png"), alt: "Cafe Bazaar" },
       },
       {
         label: "Myket",
         url: "https://myket.ir/app/com.rntest",
-        logo: { src: "/logos/myket.png", alt: "Myket" },
+        logo: { src: asset("logos/myket.png"), alt: "Myket" },
       },
     ],
     points: [],
@@ -152,7 +155,7 @@ const projects = [
           <img
             class="brand__avatar"
             id="portraitThumb"
-            src="/images/portrait.jpg"
+            src={asset("images/portrait.jpg")}
             alt=""
             width="36"
             height="36"
@@ -205,7 +208,7 @@ const projects = [
       <img
         class="portrait-lightbox__img"
         id="portraitFull"
-        src="/images/portrait.jpg"
+        src={asset("images/portrait.jpg")}
         alt="Amir Mohammad Kahfi"
         width="800"
         height="1000"
@@ -502,7 +505,7 @@ const projects = [
                   <h3 class="chapter-job__role">
                     <img
                       class="brand-logo brand-logo--inline"
-                      src="/logos/iust.png?v=3"
+                      src={`${asset("logos/iust.png")}?v=3`}
                       alt=""
                       width="44"
                       height="44"
@@ -651,7 +654,7 @@ const projects = [
                 <p class="edu__school">
                   <img
                     class="brand-logo"
-                    src="/logos/iust.png?v=3"
+                    src={`${asset("logos/iust.png")}?v=3`}
                     alt=""
                     width="44"
                     height="44"
@@ -672,7 +675,7 @@ const projects = [
                 <p class="edu__school">
                   <img
                     class="brand-logo"
-                    src="/logos/shahed.png?v=3"
+                    src={`${asset("logos/shahed.png")}?v=3`}
                     alt=""
                     width="44"
                     height="44"
@@ -699,7 +702,7 @@ const projects = [
                 <span class="edu__time">
                   <img
                     class="brand-logo brand-logo--sm"
-                    src="/logos/iust.png?v=3"
+                    src={`${asset("logos/iust.png")}?v=3`}
                     alt=""
                     width="32"
                     height="32"
@@ -751,7 +754,7 @@ const projects = [
                 <span class="stat__meta">
                   <img
                     class="brand-logo brand-logo--meta"
-                    src="/logos/iust.png?v=5"
+                    src={`${asset("logos/iust.png")}?v=5`}
                     alt=""
                     width="28"
                     height="28"
@@ -778,7 +781,6 @@ const projects = [
 
             <footer class="foot" style="margin-top:2rem">
               <span>© 2026 Amir Mohammad Kahfi</span>
-              <span>Built with Astro &amp; Three.js · Tehran</span>
               <a href="#top" data-nav="0">Back to origin ↑</a>
             </footer>
           </div>
@@ -914,7 +916,7 @@ const projects = [
     const resumeClose = document.getElementById("resumeClose");
     const resumeCloseBg = document.getElementById("resumeCloseBg");
     const resumeDownload = document.getElementById("resumeDownload");
-    const resumeSrc = "/resume/Amir_Mohammad_Kahfi_Resume";
+    const resumeSrc = `${import.meta.env.BASE_URL}resume/Amir_Mohammad_Kahfi_Resume`;
     let resumeBlobUrl = "";
     let resumeLastFocus = null;
     let resumeLoading = null;
