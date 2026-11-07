@@ -1,8 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const asset = (path: string) =>
-  `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const asset = (path: string) => `${base}${path.replace(/^\//, "")}`;
 
 const stack = [
   { k: "Frameworks", v: ["Nest.js", "Express.js", "Next.js", "React.js"] },
@@ -916,7 +916,7 @@ const projects = [
     const resumeClose = document.getElementById("resumeClose");
     const resumeCloseBg = document.getElementById("resumeCloseBg");
     const resumeDownload = document.getElementById("resumeDownload");
-    const resumeSrc = `${import.meta.env.BASE_URL}resume/Amir_Mohammad_Kahfi_Resume`;
+    const resumeSrc = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}resume/Amir_Mohammad_Kahfi_Resume`;
     let resumeBlobUrl = "";
     let resumeLastFocus = null;
     let resumeLoading = null;
