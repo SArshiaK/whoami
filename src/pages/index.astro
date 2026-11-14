@@ -51,7 +51,7 @@ const projects = [
     when: "2026",
     featured: true,
     summary:
-      "A chatbot that tells users how to fix problems, grounded in about 1,000 existing troubleshooting records.",
+      "A chatbot that tells users how to fix problems, grounded in existing troubleshooting records.",
     points: [
       "Built the embedding pipeline with Sentence Transformers and stored vectors in ChromaDB.",
       "Every message triggers a vector search; the matches go into a prompt the LLM answers from, with local and API models plus chat history.",
@@ -125,6 +125,21 @@ const projects = [
     ],
     points: [],
     stack: ["React Native", "Android"],
+  },
+  {
+    n: "06",
+    tag: "STARTUP PRODUCTS",
+    title: "Startup Products",
+    org: "DPA · prototypes",
+    when: "PROTOTYPES",
+    summary:
+      "Prototype products built end to end — a mentoring platform, job boards and customer-survey analytics.",
+    points: [
+      "Mentoring & coaching platform: connects mentors and mentees with contracts, session scheduling and hosting, coaching plans, and a coach panel for roadmaps and exercises — plus authentication, payments, chat and search. Built end to end with AI-assisted development.",
+      "Job-board platform: for cafés and restaurants, with a version for Shahed University. Sole back-end developer.",
+      "Kavosh: restaurants run customer surveys, and an LLM analyzes the responses to highlight strengths and weaknesses. Back-end only; prototype.",
+    ],
+    stack: ["Node.js", "LLM APIs", "AI-assisted development"],
   },
 ];
 ---
