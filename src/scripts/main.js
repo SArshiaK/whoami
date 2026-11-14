@@ -10,7 +10,11 @@
     window.addEventListener("scroll", onGlobalScroll, { passive: true });
     onGlobalScroll();
 
-    // Theme toggle
+    // Theme toggle — live circular ripple from the button.
+    // Deliberately avoids the View Transitions API: that API snapshots and freezes
+    // the whole page (and the 3D canvas) and swallows input for the duration.
+    // Instead the palette morphs smoothly over the same duration as the ripple,
+    // so the page stays interactive and the 3D keeps running.
     const themeBtn = document.getElementById("themeToggle");
     const rootEl = document.documentElement;
     const syncTheme = () => {
@@ -21,10 +25,90 @@
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute("content", light ? "#f4f3ec" : "#07080a");
     };
-    themeBtn?.addEventListener("click", () => {
-      rootEl.dataset.theme = rootEl.dataset.theme === "light" ? "dark" : "light";
-      localStorage.setItem("theme", rootEl.dataset.theme);
+
+    const REVEAL_MS = 900;
+    const REVEAL_EASING = "cubic-bezier(0.65, 0, 0.35, 1)";
+    const RING_SIZE = 600;
+    const ANIM_CLASS = "is-theme-animating";
+
+    let activeThemeRing = null;
+    let themeAnimTimer = 0;
+
+    const applyTheme = (next) => {
+      rootEl.dataset.theme = next;
+      try {
+        localStorage.setItem("theme", next);
+      } catch {
+        /* ignore storage failures */
+      }
       syncTheme();
+    };
+
+    const createThemeRing = (x, y, toDark) => {
+      const ring = document.createElement("div");
+      ring.className = "theme-reveal-ring";
+      ring.setAttribute("aria-hidden", "true");
+      ring.dataset.tone = toDark ? "night" : "day";
+      ring.style.left = `${x - RING_SIZE / 2}px`;
+      ring.style.top = `${y - RING_SIZE / 2}px`;
+      ring.style.width = `${RING_SIZE}px`;
+      ring.style.height = `${RING_SIZE}px`;
+      return ring;
+    };
+
+    themeBtn?.addEventListener("click", () => {
+      const toDark = rootEl.dataset.theme === "light";
+      const next = toDark ? "dark" : "light";
+
+      if (reduceMotion) {
+        applyTheme(next);
+        return;
+      }
+
+      activeThemeRing?.remove();
+
+      const rect = themeBtn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const radius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y),
+      );
+
+      // Enable smooth colour interpolation, flush the old styles so the transition
+      // has a baseline, then swap the theme. Every surface recolours over REVEAL_MS
+      // at the same pace as the ripple instead of snapping.
+      rootEl.style.setProperty("--theme-morph-duration", `${REVEAL_MS}ms`);
+      rootEl.classList.add(ANIM_CLASS);
+      void rootEl.offsetWidth;
+      applyTheme(next);
+
+      window.clearTimeout(themeAnimTimer);
+      themeAnimTimer = window.setTimeout(() => {
+        rootEl.classList.remove(ANIM_CLASS);
+      }, REVEAL_MS + 40);
+
+      const ring = createThemeRing(x, y, toDark);
+      activeThemeRing = ring;
+      document.body.appendChild(ring);
+
+      const targetScale = (radius * 2) / RING_SIZE;
+      const scale = ring.animate(
+        { transform: ["scale(0)", `scale(${targetScale})`] },
+        { duration: REVEAL_MS, easing: REVEAL_EASING, fill: "forwards" },
+      );
+      const fade = ring.animate(
+        { opacity: [1, 1, 0], offset: [0, 0.62, 1] },
+        { duration: REVEAL_MS * 0.92, easing: "linear", fill: "forwards" },
+      );
+
+      scale.finished
+        .catch(() => {})
+        .finally(() => {
+          fade.cancel();
+          if (activeThemeRing === ring) activeThemeRing = null;
+          ring.remove();
+        });
     });
     syncTheme();
 
