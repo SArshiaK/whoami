@@ -1,0 +1,121 @@
+---
+import type { Project } from "../../data/portfolio";
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+        <!-- CHAPTER 04: SELECTED WORK (PROJECT SHOWCASE) -->
+        <section class="chapter chapter--4" id="ch-4">
+          <div class="chapter__wrap chapter-work">
+            <div class="chapter-work__grid">
+              <!-- Left: Section Head & Interactive Project Buttons -->
+              <div class="chapter-work__nav">
+                <div class="sec__head sec__head--compact">
+                  <div>
+                    <span class="sec__idx">04 — Selected work</span>
+                    <h2 class="sec__title">Things that<br /><em>do the work.</em></h2>
+                  </div>
+                </div>
+
+                <div class="work-selector" id="workTabs">
+                  {projects.map((p, idx) => (
+                    <button
+                      type="button"
+                      class:list={["work-btn", { "is-active": idx === 0 }]}
+                      data-pindex={idx}
+                    >
+                      <span class="work-btn__num">{p.n}</span>
+                      <span class="work-btn__info">
+                        <span class="work-btn__title">{p.title}</span>
+                        <span class="work-btn__tag">{p.tag}</span>
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Right: Active Project Card Display -->
+              <div class="work-display" id="workDisplay">
+                {projects.map((p, idx) => (
+                  <article
+                    class:list={["project", "work-card", { "is-active": idx === 0, "project--featured": p.featured }]}
+                    id={`pcard-${idx}`}
+                  >
+                    <div class="project__top">
+                      <span class="project__num">{p.n}</span>
+                      <span class:list={["project__tag", { "project__tag--alt": p.featured }]}>{p.tag}</span>
+                      <span class="project__when">{p.when}</span>
+                    </div>
+                    <h3 class="project__title">{p.title}</h3>
+                    <div class="project__org">
+                      {p.logo && (
+                        <img
+                          class="brand-logo"
+                          src={`${p.logo.src}?v=3`}
+                          alt=""
+                          width="40"
+                          height="40"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      )}
+                      <span>{p.org}</span>
+                    </div>
+                    <div class:list={["project__body", { "project__body--single": p.points.length === 0 }]}>
+                      <div>
+                        <p class="project__summary">{p.summary}</p>
+                        {p.links && p.links.length > 0 && (
+                          <div class="project__published">
+                            <span class="project__published-label">Published:</span>
+                            <div class="project__published-links">
+                              {p.links.map((link) => (
+                                <a
+                                  href={link.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  class="project__link"
+                                >
+                                  {link.logo && (
+                                    <img
+                                      class="brand-logo brand-logo--store"
+                                      src={`${link.logo.src}?v=3`}
+                                      alt=""
+                                      width="24"
+                                      height="24"
+                                      loading="lazy"
+                                      decoding="async"
+                                    />
+                                  )}
+                                  {link.label}
+                                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                  </svg>
+                                </a>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      {p.points.length > 0 && (
+                        <ul class="project__list">
+                          {p.points.map((pt) => (
+                            <li>{pt}</li>
+                          ))}
+                        </ul>
+                      )}
+                      <div class="project__stack">
+                        {p.stack.map((s) => (
+                          <span>{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>

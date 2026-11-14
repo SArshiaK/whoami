@@ -1,0 +1,28 @@
+  <div
+    class="resume-lightbox"
+    id="resumeLightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-label="Resume"
+    hidden
+  >
+    <button type="button" class="resume-lightbox__backdrop" id="resumeCloseBg" tabindex="-1" aria-label="Close resume"></button>
+    <div class="resume-lightbox__panel">
+      <div class="resume-lightbox__bar">
+        <span class="resume-lightbox__title">Resume</span>
+        <div class="resume-lightbox__actions">
+          <button type="button" class="resume-lightbox__download" id="resumeDownload">Download PDF</button>
+          <button type="button" class="resume-lightbox__close" id="resumeClose" aria-label="Close resume">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="resume-lightbox__frame-wrap">
+        <p class="resume-lightbox__status" id="resumeStatus">Loading resume…</p>
+        <iframe class="resume-lightbox__frame" id="resumeFrame" title="Amir Mohammad Kahfi resume"></iframe>
+      </div>
+    </div>
+  </div>

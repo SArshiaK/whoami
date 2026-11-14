@@ -1,0 +1,83 @@
+---
+import { asset } from "../../lib/asset";
+import type { Job } from "../../data/portfolio";
+
+interface Props {
+  jobs: Job[];
+}
+
+const { jobs } = Astro.props;
+---
+
+        <!-- CHAPTER 03: EXPERIENCE & RESEARCH -->
+        <section class="chapter chapter--3" id="ch-3">
+          <div class="chapter__wrap">
+            <div class="sec__head">
+              <div>
+                <span class="sec__idx">03 — Experience</span>
+                <h2 class="sec__title">Where I've been building.</h2>
+              </div>
+              <p class="sec__note">Backend systems · RAG · production tooling</p>
+            </div>
+
+            <div class="chapter-jobs">
+              {jobs.map((job) => (
+                <article class="chapter-job">
+                  <div class="chapter-job__time">
+                    {job.time}
+                    <small>{job.type}</small>
+                  </div>
+                  <div>
+                    <h3 class="chapter-job__role">{job.role}</h3>
+                    <div class="chapter-job__org">
+                      {job.logo && (
+                        <img
+                          class="brand-logo"
+                          src={`${job.logo.src}?v=3`}
+                          alt=""
+                          width="44"
+                          height="44"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      )}
+                      <span>{job.org}</span>
+                    </div>
+                    <p class="chapter-job__desc">{job.desc}</p>
+                  </div>
+                </article>
+              ))}
+
+              <a
+                class="chapter-job"
+                href="https://webpages.iust.ac.ir/msharifi/dslab.html#members"
+                target="_blank"
+                rel="noreferrer"
+                style="text-decoration:none;"
+              >
+                <div class="chapter-job__time">
+                  2025 — Present
+                  <small>Research</small>
+                </div>
+                <div>
+                  <h3 class="chapter-job__role">
+                    <img
+                      class="brand-logo brand-logo--inline"
+                      src={`${asset("logos/iust.png")}?v=3`}
+                      alt=""
+                      width="44"
+                      height="44"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    Distributed Systems Lab · IUST
+                  </h3>
+                  <div class="chapter-job__org">Federated Learning &amp; Self-Healing</div>
+                  <p class="chapter-job__desc">
+                    Researching self-healing distributed algorithms and federated learning backplanes under the supervision of Prof. M. Sharifi.
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>

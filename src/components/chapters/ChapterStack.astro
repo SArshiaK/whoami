@@ -1,0 +1,51 @@
+---
+import type { StackRow } from "../../data/portfolio";
+
+interface Props {
+  stack: StackRow[];
+}
+
+const { stack } = Astro.props;
+---
+
+        <!-- CHAPTER 02: STACK & CAPABILITIES -->
+        <section class="chapter chapter--2" id="ch-2">
+          <div class="chapter__wrap">
+            <div class="sec__head">
+              <div>
+                <span class="sec__idx">02 — Stack</span>
+                <h2 class="sec__title">The tools I reach for.</h2>
+              </div>
+              <p class="sec__note">
+                Chosen for boring reliability,<br />not for the README.
+              </p>
+            </div>
+
+            <div class="chapter-stack__grid">
+              <div class="chapter-stack__col">
+                {stack.slice(0, 4).map((row) => (
+                  <div class="stack-box">
+                    <span class="stack-box__label">{row.k}</span>
+                    <div class="stack-box__chips">
+                      {row.v.map((item) => (
+                        <span class="chip">{item}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div class="chapter-stack__col">
+                {stack.slice(4).map((row) => (
+                  <div class="stack-box">
+                    <span class="stack-box__label">{row.k}</span>
+                    <div class="stack-box__chips">
+                      {row.v.map((item) => (
+                        <span class="chip">{item}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
