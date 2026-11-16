@@ -40,34 +40,47 @@ export interface StackRow {
 }
 
 export const stack: StackRow[] = [
+  { k: "Languages", v: ["TypeScript", "JavaScript", "Python"] },
   { k: "Frameworks", v: ["Nest.js", "Express.js", "Next.js", "React.js"] },
   { k: "ORM / ODM", v: ["Sequelize", "TypeORM", "Mongoose", "Prisma"] },
   { k: "Databases", v: ["PostgreSQL", "MongoDB", "MySQL", "Redis"] },
   { k: "APIs", v: ["REST", "gRPC", "Swagger", "SMS.ir", "PayPing", "IdPay", "Zibal"] },
   { k: "Real-time", v: ["Socket.IO", "gRPC services"] },
-  { k: "AI & LLM", v: ["OpenAI-compatible APIs", "Ollama", "Embeddings", "RAG", "Qdrant", "ChromaDB", "Prompt engineering", "JSON mode"] },
-  { k: "DevOps", v: ["Docker", "Kubernetes (basic)", "GitHub Actions", "GitLab CI"] },
+  {
+    k: "AI & LLM",
+    v: [
+      "OpenAI-compatible APIs",
+      "Ollama",
+      "Embeddings",
+      "RAG",
+      "Qdrant",
+      "ChromaDB",
+      "Prompt engineering",
+      "JSON mode",
+    ],
+  },
+  { k: "DevOps", v: ["Docker", "Kubernetes (basic)", "GitHub Actions (basic)", "GitLab CI (basic)"] },
   { k: "Developer Tools", v: ["Postman", "Cursor", "Claude Code"] },
 ];
 
 export const jobs: Job[] = [
   {
-    time: "Dec 2025 — Aug 2026",
+    time: "Dec 2025 – Present",
     type: "Part-time",
     role: "Software Engineer",
     org: "Faraz Co · Iran Zamin Bank Technology Development",
     logo: { src: asset("logos/faraz.png"), alt: "Faraz" },
-    desc: "Back-end engineering with a focus on LLM features in production — retrieval pipelines, embedding services and support tooling built for real users.",
+    desc: "Back-end engineering on bank technology products — APIs, services and support tooling, including RAG and LLM features in pre-production testing.",
   },
   {
-    time: "Jun 2023 — Present",
+    time: "Jun 2023 – Present",
     type: "Full-time",
     role: "Back-end Developer",
     org: "DPA · Dade Pardazi Azmoodeh Karan",
     desc: "Server-side services, data pipelines and internal tools for legal, audit and financial workflows — from web crawlers and RAG assistants to automated financial data pipelines.",
   },
   {
-    time: "Apr — Jun 2023",
+    time: "Apr 2023 – Jun 2023",
     type: "Full-time",
     role: "Back-end Developer Intern",
     org: "IZICenter · Iran Zamin Bank Innovation Center",
@@ -86,14 +99,15 @@ export const projects: Project[] = [
     when: "2026",
     featured: true,
     summary:
-      "A chatbot that tells users how to fix problems, grounded in existing troubleshooting records.",
+      "A chatbot that tells users how to fix problems, grounded in existing troubleshooting records. RAG pipeline built in Python.",
     points: [
-      "Built the embedding pipeline with Sentence Transformers and stored vectors in ChromaDB.",
-      "Every message triggers a vector search; the matches go into a prompt the LLM answers from, with local and API models plus chat history.",
+      "Built the embedding pipeline with Sentence Transformers and stored the vectors in ChromaDB.",
+      "Each message triggers a vector search; matches go into the LLM prompt (local or API-based) with chat history.",
       "Added BM25 keyword search in parallel with semantic search to raise retrieval accuracy.",
-      "Implemented micro-batching to group near-simultaneous embedding requests within tight time windows, maintaining high throughput under concurrent traffic.",
+      "Used micro-batching to keep embedding fast under many simultaneous requests.",
+      "Added an LLM step that detects which data categories a question belongs to before retrieval.",
     ],
-    stack: ["Sentence Transformers", "ChromaDB", "BM25", "Local & API LLMs", "Micro-batching"],
+    stack: ["Python", "Sentence Transformers", "ChromaDB", "BM25", "Local & API LLMs"],
   },
   {
     n: "02",
@@ -102,21 +116,21 @@ export const projects: Project[] = [
     org: "DPA · full data pipeline from scratch",
     when: "2025",
     summary:
-      "A chatbot that explains legal and regulatory questions — crawling, chunking and retrieval all built in-house.",
+      "A chatbot that explains legal and regulatory questions — crawling, chunking and retrieval all built in-house. RAG pipeline built in Python.",
     points: [
-      "Crawled legal websites, used an LLM to chunk the text, and had it generate categories and summaries for each chunk, stored in Qdrant.",
+      "Crawled legal websites; an LLM chunks the text and generates categories and summaries per chunk, stored in Qdrant.",
       "Retrieval routes the question to a category first, then runs vector search and parallel BM25 keyword search.",
       "Answers cite exact legal articles, and the interface shows which parts are verbatim law and which are model analysis.",
       "Reduced hallucination with prompt constraints (analyze, never invent law) and a lower temperature.",
     ],
-    stack: ["Qdrant", "Web crawling", "LLM chunking", "BM25", "Prompt engineering"],
+    stack: ["Python", "Qdrant", "Web crawling", "LLM chunking", "BM25", "Prompt engineering"],
   },
   {
     n: "03",
     tag: "AUTOMATION",
     title: "Audit & Fund Compliance Automation",
     org: "DPA · ongoing",
-    when: "2024 — NOW",
+    when: "ongoing",
     summary:
       "Internal tools that replaced manual accounting and audit work with queued, verifiable pipelines.",
     points: [
@@ -124,7 +138,7 @@ export const projects: Project[] = [
       "Fund threshold checks: regulatory limits are verified automatically from the uploaded fund assets.",
       "Audit automation: uploading a company's detailed accounting documents runs all calculations and checklists automatically.",
     ],
-    stack: ["Node.js", "Background job queues", "Batch Data Processing"],
+    stack: ["Background job queues"],
   },
   {
     n: "04",
@@ -132,14 +146,33 @@ export const projects: Project[] = [
     title: "Admin Panels & Reporting",
     org: "IZICenter · Faraz Co",
     logo: { src: asset("logos/iranzamin.png"), alt: "Iran Zamin Bank" },
-    when: "2023 — NOW",
+    when: "2023 – Present",
     summary:
       "Internal admin panels with data display and reporting features, used by operations teams behind the scenes.",
-    points: [],
+    points: ["Built internal admin panels with data display and reporting features."],
     stack: ["Admin panels", "Reporting", "Internal tools"],
   },
   {
     n: "05",
+    tag: "STARTUP PRODUCTS",
+    title: "Startup Products",
+    org: "DPA · prototypes",
+    when: "PROTOTYPES",
+    summary:
+      "Prototype products built at DPA — mentoring, job board, smart fridge integrations, and a shared AI microservice.",
+    points: [
+      "Biztalk — mentoring and coaching platform: real-time mentor–mentee chat with Socket.IO and persistent chat history.",
+      "Biztalk — online classes: integrated SkyRoom and BigBlueButton (authentication, room creation, assigning rooms to mentoring sessions) alongside a self-hosted Jitsi, all kept as options so we did not depend on one provider.",
+      "Restook — job-board platform: built a standalone SMS microservice where the app pushes messages into a Redis queue and they are sent in batches through SMS.ir.",
+      "Restook — SMS.ir has no delivery webhooks, so the service polls delivery status and resends undelivered messages.",
+      "Waycup — smart auto-purchase fridge: built the gRPC client connecting the app to the hardware vendor's APIs for authenticated unlocking and purchases.",
+      "Across products — AI microservice: extracted LLM features into a separate AI microservice that the company's apps call over gRPC.",
+      "Kavosh — prototype: back-end for restaurant customer surveys, with LLM analysis of the responses.",
+    ],
+    stack: ["Socket.IO", "Redis", "SMS.ir", "gRPC", "SkyRoom", "BigBlueButton", "Jitsi"],
+  },
+  {
+    n: "06",
     tag: "SHIPPED / ANDROID",
     title: "Pomodoro Study Planner",
     org: "Personal project",
@@ -160,20 +193,5 @@ export const projects: Project[] = [
     ],
     points: [],
     stack: ["React Native", "Android"],
-  },
-  {
-    n: "06",
-    tag: "STARTUP PRODUCTS",
-    title: "Startup Products",
-    org: "DPA · prototypes",
-    when: "PROTOTYPES",
-    summary:
-      "Prototype products built end to end — a mentoring platform, job boards and customer-survey analytics.",
-    points: [
-      "Mentoring & coaching platform: connects mentors and mentees with contracts, session scheduling and hosting, coaching plans, and a coach panel for roadmaps and exercises — plus authentication, payments, chat and search. Built end to end with AI-assisted development.",
-      "Job-board platform: for cafés and restaurants, with a version for Shahed University. Sole back-end developer.",
-      "Kavosh: restaurants run customer surveys, and an LLM analyzes the responses to highlight strengths and weaknesses. Back-end only; prototype.",
-    ],
-    stack: ["Node.js", "LLM APIs", "AI-assisted development"],
   },
 ];

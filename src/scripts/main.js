@@ -207,7 +207,7 @@
     const resumeClose = document.getElementById("resumeClose");
     const resumeCloseBg = document.getElementById("resumeCloseBg");
     const resumeDownload = document.getElementById("resumeDownload");
-    const resumeSrc = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}resume/Amir_Mohammad_Kahfi_Resume`;
+    const resumeSrc = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}resume/Amir_Mohammad_Kahfi_Resume.pdf`;
     let resumeBlobUrl = "";
     let resumeLastFocus = null;
     let resumeLoading = null;
